@@ -23,6 +23,7 @@
 \usepackage{hyperref}
 \usepackage{epstopdf}
 \usepackage{amsmath}
+\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
 
 \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, showstringspaces=false} 
 
@@ -167,6 +168,7 @@ Q^{\pi}(s,a)= E_{\pi} \{ \sum_{k=0}^\infty \gamma^k r_{(t+k+1)} | s_{t}=s, a_{t}
 Da die Funktion während des Lernes unbekannt ist, basiert die Erfahrung aus Paaren von $(s,a)$ in der Form \glqq Ich war im Zustand $s$ und habe $a$ ausgeführt und bin dadurch in $s'$ gelandet\grqq\xspace. Wenn man das Q-Wert Array hat und dieses durch Erfahrungen direkt aktualisiert, nennt man das \textbf{Q-Learning}.
 
 \section{Dynamic Programming}
+\label{sec:dynamicPrograming}
 \subsection{Definition}
 Unter dynamischer Programmierung versteht man eine Methode zum \textbf{algorithmischen Lösen von Optimierungsproblemen}. Der Begriff wurde von Richard Bellman eingeführt, weswegen auch häufig vom \glqq Bellman Prinzip der dynamischen Programmierung gesprochen\grqq\xspace wird. \textbf{Voraussetzungen} für die dynamische Programmierung sind:
 
@@ -176,6 +178,9 @@ Unter dynamischer Programmierung versteht man eine Methode zum \textbf{algorithm
 \item{Belohnungen für alle Zustände bekannt}
 \item{Folgezustände in Abhängigkeit von Ausgangszustand und Aktion bekannt}
 \end{itemize}
+
+\todo{Sieht das nur so aus oder kann ich mit diesem ganzen Wissen auch einen $A^*$ machen ? OS}
+
 
 Dynamische Programmierung lässt sich dann erfolgreich einsetzen, wenn das Optimierungsproblem aus \textbf{vielen gleichartigen Teilproblemen} besteht und sich die optimale Lösung des Problems aus den optimalen Lösungen der Teilprobleme zusammensetzt. Hierfür werden zunächst die optimalen Lösungen der \textbf{kleinsten Teilprobleme direkt berechnet} und dann geeignet zu einer Lösung eines \textbf{nächstgrößeren Teilproblems zusammengesetzt}. \textbf{Teilergebnisse werden in einer Tabelle} gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf die Ergebnisse zurückgreifen zu können. Bei konsequentem Einsatz vermeidet die dynamische Programmierung kostspielige Rekursionen weil bekannte Teilergebnisse wiederverwendet werden.\\
 Zum Einsatz kommt die dynamische Programmierung in der Regelungstheorie und verwandten Gebieten und wird dort eingesetzt um beispielsweise Gleichungen herzuleiten (Hamilton-Jacobi-Bellman-Gleichung), deren Lösung den optimalen Wert ergibt.
@@ -399,6 +404,8 @@ Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s
 
 
 \section{Monte Carlo Methoden}
+\label{sec:monteCarloMethoden}
+
 \subsection{Grundidee}
 Bei den Monte Carlo Methoden besitzt man kein vollständiges Wissen über die Umgebung, sondern sammelt Erfahrungen durch tatsächliches oder simuliertes Interagieren mit der Umwelt. Zudem gibt es nur episodische Aufgaben, da die Belohnung sichergestellt sein muss. Die Abschätzung der Zustandswerte und Strategie-Änderungen geschieht erst am Ende einer Episode (Wert eines Zustandes = kumulierte Belohnung bis zum Ende der Episode). Am Ende wird der Durchschnitt über alle Episoden gebildet.\\
 \\
@@ -406,7 +413,7 @@ Vorteile gegenüber Dynamic Programming:
 \begin{itemize}
 \item{Das optimale Verhalten kann direkt aus der Interaktion mit der Umgebung gelernt werden, ohne ein Modell der Umgebung vorhalten zu müssen.}
 \item{Sie können in Simulationen oder Beispiel-Modellen eingesetzt werden, man muss also kein komplettes Umgebungsmodell mit den Übergangswahrscheinlichkeiten erstellen.}
-\item{Es ist einfach und effizient sich mittels der Monte Carlo Methoden auf eine kleine Teilenge der Zustände zu fokussieren.}
+\item{Es ist einfach und effizient sich mittels der Monte Carlo Methoden auf eine kleine Teilmenge der Zustände zu fokussieren.}
 \end{itemize}
 
 Trotz der Unterschiede zwischen Dynamic Programming und Monte Carlo Methoden, werden die wichtigsten Ideen vom Dynamic Programming übernommen. Es werden die gleichen Value-Functions berechnet und über die gleichen Methoden versucht, die optimale Funktion zu bestimmen. Beim Dynamic Programming werden in der Evaluation $V^{\pi}$ und $Q^{\pi}$ für eine Policy $\pi$ bestimmt und anschließen durch Improvement verbessert. Jeder dieser Schritte wird für die Monte Carlo Methoden übernommen, in dem nur beispielhafte Erfahrungen vorhanden sind, da die Umgebung unbekannt ist.
@@ -496,19 +503,28 @@ Der Algorithmus folgt dabei der behaviour policy und verbessert die estimation P
 Die behaviour policy $\pi'$ ist eine willkürliche soft policy. Die estimation policy $\pi$ ist greedy auf Basis von $Q$ und eine Schätzung von $Q^{\pi}$.
 
 \section{Temporal-Difference Learning}
-\subsection{Definition}
-Temporal Difference Learning ist eine \textbf{Vorhersagemethode}, welche hauptsächlich beim Reinforcement Learning eingesetzt wird und eine \textbf{Kombination aus Monte Carlo und Dynamic Programming} Ideen ist.\\
-Es stellt eine Monte Carlo Methode dar, da es seine \textbf{Umgebung auf Basis einer Strategie erkundet} und nutzt Dynamic Programming Techniken indem es auf Basis der zuvor \textbf{gelernten Schätzungen}, seinen \textbf{aktuelle Schätzung approximiert}. Der Algorithmus ist dabei an das \glqq temporal difference model\grqq\xspace tierischen Lernens angelehnt.\\
-\\
-TD Learning vereint die Vorteile von Dynaminc Programming (Simulation des nächsten Schritts auf Basis des internen Modells) und Monte Carlo Methoden (es wird kein Modell benötigt). Jedoch besteht auch hier das \textbf{Control Problem} die optimale Strategie zu finden.\\
-\\
-Als Vorhersagemethode nimmt Temporal Difference Learning es in Kauf, das \textbf{aufeinanderfolgende Vorhersagen häufig korrelieren}. Beim überwachten Lernen wird auf Basis vorhandener Beobachtungen gelernt und die Vorhersagen werden angepasst um bestimmte Beobachtungen genauer vorherzusagen zu können. Beim Temporal Difference Learning jedoch versucht man die Vorhersagen so anzupassen, dass diese genauere \textbf{Aussagen über Beobachtungen in der Zukunft} zulassen.\\
-\\
-Mathematisch gesprochen wird bei beiden Varianten versucht eine Kostenfunktion im Hinblick auf den Fehler bei der Vorhersage einer Variable $E[z]$ zu optimieren. Beim Standardverfahren nehmen wir für $E[z]=z$ an, wobei $z$ den aktuell beobachteten Wert darstellt. Beim Temporal Difference Learning wird hierfür ein Model verwendet, wobei $z$ den totalen Gewinn darstellt und $E[z]$ über eine Bellman-Gleichung gegeben die das Ergebnis schätzt.
+	\subsection{Motivation}
+	Dynamic Programming (siehe: \ref{sec:dynamicPrograming}) und Monte Carlo Methoden (siehe: \ref{sec:monteCarloMethoden}) weisen Einschränkungen auf die im praktischen Einsatz die Größe der lösbaren Probleme stark einschränken. Dies sind im einzelnen:
+	\begin{description}
+		\item[DP]{Die Menge der Zustände ist bekannt und endlich}
+		\item[DP]{Die Menge der möglichen Aktionen \{a\} ist bekannt und endlich}
+		\item[DP]{Die Belohnungen für alle Zustände müßen bekannt sein}
+		\item[DP]{Die Folgezustände in Abhängigkeit von Ausgangszustand und Aktion müßen bekannt sein}
+ 		\item[DP]{Die Menge der Zustände muß bekannt und endlich sein}
+		\item[MC]{Das Problem muß episodisch sein}
+		\item[MC]{Wissen aus vorhergehenden Episoden wird nicht verwendet (Rechenaufwand)}
+	\end{description}
+	
+	Temporal Difference Learning verbindet Konzepte der Dynamischen Programmierung und der Monte Carlo Methoden um die Nachteile zu vermeiden und die Vorteile (s.u.) der jeweiligen Methode beizubehalten.
+	
+	\begin{description}
+		\item[MC] Zustandraum kann zur Laufzeit erforscht werden
+		\item[DP] Verteilung der Belohnungen auf die korrekten, die ``verantwortlichen`` Zustände
+	\end{description}
 
 \subsection{Vergleich TD Learning, DP und MC}
 Dynamic Programming betrachtet alle Zustände und benötigt ein Modell zur Bestimmung der Belohnungen und mit den Wahrscheinlichkeitsverteilungen für Folgezustände.\\
-Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell.\\
+Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
 Bei Monte Carlo Methoden wird bis zum Ende einer Episode gewartet, bevor Informationen über die Belohnung erhalten werden, wobei beim Dynamic Programming und beim TD Learning nur ein Schritt gegangen werden muss (\textbf{Bootstrapping}).
 
 \subsection{On-Policy TD Control: Sarsa}
@@ -529,10 +545,11 @@ Q(s_{t},a_{t}) \leftarrow Q(s_{t},a_{t}) + \alpha [r_{t+1} + \gamma Q(s_{t+1},a_
 Der Wert $\alpha$ ist hierbei ein konstanter Parameter für die Schrittweite. Der Sarsa-Algorithmus ist ein On-Policy Control Algortihmus und wird in Abbildung \ref{fig:Sarsa} dargestellt.
 
 \begin{figure}[htbp]
-	\centering	\includegraphics[width=0.8\textwidth]{Bilder/Q-Learning.png}
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/Sarsa.png}
 	\caption{Sarsa: On Policy TD Control Algorithmus}
 	\label{fig:Sarsa}
 \end{figure}
+
 
 \subsection{Off-Policy TD Control: Q-Learning}
 Beim Off-Policy Verfahren approximiert die gelernte \glqq action-value-function\grqq\xspace $Q$  direkt dir optimale Funktion $Q^{*}$ unabhängig davon welche Strategie verfolgt wird. Q-Learning ist ein Off-Policy TD Control Algorithmus und wird in Abbildung \ref{fig:QLearning} dargestellt.
@@ -556,6 +573,7 @@ Der Agent soll vom Start zum Ziel gelangen und dabei der Klippe nicht zu nahe ko
 	\caption{Cliff Anwendung}
 	\label{fig:Cliff}
 \end{figure}
+\todo{check: Auf der cliff Abbildung \ref{fig:Cliff} sieht der optimale weg aus wie ca. -14 in Abbildung \ref{fig:Cliff_Result} kommt keiner näher als ca. -25 ?}
 
 Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning lernt die Werte für die optimale Strategie, wodurch der Agent nahe der Klippe entlangläuft und häufiger herunterfällt. Sarsa hingegen berücksichtigt die Auswahl der Aktionen und lernt den längeren aber sichereren Pfad. Auch wenn Q Learning die optimale Strategie lernt, ist die Performance schlechter als die von Sarsa.\\
 
@@ -565,6 +583,7 @@ Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning le
 	\label{fig:Cliff_Result}
 \end{figure}
 
+\todo{check: Oben steht das Q Learning den optimalen Pfad lernt, Q Learning hat in Abbildung \ref{fig:Cliff_Result} aber anscheinend einen schlechteren Reward als Sarsa das den sicherreren Pfad lernen soll ?}
 
 \subsection{Trace Decay Factor}
 Der Trace Decay Factor $\lambda$ ist ein \glqq accumulating eligibility trace\grqq\xspace welcher angibt wie häufig ein Zustand besichtigt wurde (vgl. Abbildung \ref{fig:Trace}). Wird ein Zustand weniger häufig besucht nimmt der Faktor über die Zeit hinweg ab.\\
@@ -579,6 +598,7 @@ Markelic Kap 3.4.1).
 	\label{fig:Trace}
 \end{figure}
 
+\listoftodos
 
 \end{document}
 
