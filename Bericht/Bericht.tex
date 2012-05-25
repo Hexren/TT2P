@@ -472,12 +472,17 @@ Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour
 		\item[DP] Verteilung der Belohnungen auf die korrekten, die ``verantwortlichen`` Zustände
 	\end{description}
 
+
+	\subsection{Arbeitsweise Umgangssprachlich}
+	Der Gedank bei Temporal Difference Learning alle Erwartungswerte für rewards beliebig zu füllen und dann beim durchlaufen eine Pfades die auf diesem liegenden Werte anhand ihrer der Abweichung $real - erwartet$ anzugleichen.
+
 \subsection{Vergleich TD Learning, DP und MC}
 Dynamic Programming betrachtet alle Zustände und benötigt ein Modell zur Bestimmung der Belohnungen und mit den Wahrscheinlichkeitsverteilungen für Folgezustände.\\
 Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
 Bei Monte Carlo Methoden wird bis zum Ende einer Episode gewartet, bevor Informationen über die Belohnung erhalten werden, wobei beim Dynamic Programming und beim TD Learning nur ein Schritt gegangen werden muss (\textbf{Bootstrapping}).
 
 \subsection{On-Policy TD Control: Sarsa}
+
 Im ersten Schritt wird die \glqq action-value-function\grqq\xspace $Q^{\pi}(s,a)$ für die aktuelle Strategie $\pi$ und alle Zustände $s$ und Aktionen $a$ gelernt. Man erhält somit eine alternierende Sequenz aus Zuständen und Zustands-Aktions Paaren (state-action-pairs), die in Abbildung \ref{fig:SA-Pairs} dargestellt ist.
 
 \begin{figure}[htbp]
@@ -536,6 +541,11 @@ Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning le
 \todo{check: Oben steht das Q Learning den optimalen Pfad lernt, Q Learning hat in Abbildung \ref{fig:Cliff_Result} aber anscheinend einen schlechteren Reward als Sarsa das den sicherreren Pfad lernen soll ?}
 
 \subsection{Trace Decay Factor}
+\subsubsection{Zusammenfassung Umgangssprachlich}
+Der Trace decay faktor gibt an mit welcher Stärke eine in Zustand $s_t$ beobachtete Abweichung der real gemessen Rewards von den erwarteten Rewards $V(s_t)$ in die erwarteten Rewards der Zustände über die zu $s$ gelangt wurde eingerechnet wird.
+Hierzu wird ein Trace Decay Factor $\lambda$ für jeden Zustand geführt der steigt wenn ein Zustand besucht wird und sonst für diesen abnimmt und in der Regel einen Multiplikator $\leq 1$ darstellt. Mit $\lambda$ multipliziert reduziert sich also der in $s_t$ gefunden Fehler für die Zustände $s_{t-n}$ (solche über die zu $s_t$ gelangt wurde) in der Regel wird der Fehler umso mehr abgeschwächt umsoweiter $s_{t-n}$ in der Vergangenheit liegt..
+
+\subsubsection{Referenzen/Bilder}
 Der Trace Decay Factor $\lambda$ ist ein \glqq accumulating eligibility trace\grqq\xspace welcher angibt wie häufig ein Zustand besichtigt wurde (vgl. Abbildung \ref{fig:Trace}). Wird ein Zustand weniger häufig besucht nimmt der Faktor über die Zeit hinweg ab.\\
 \subsection{Eligibility Traces}
 Werden in TD Learning Algorithmen verwendet und ist ein Konzept, um den in einem TD
