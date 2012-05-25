@@ -379,8 +379,15 @@ Danach wird die verbesserte Policy $\pi(s)$ mit der vorherigen Policy $b$ vergli
 Sollten sich noch Änderungen ergeben haben wird eine neue Iteration mit Policy Evaluation und Policy Improvement begonnen.
 Unterscheiden sich die beiden Policies nicht, so wurde die optimale Strategie gefunden.\\
 
-Abschließen ein Beispiel zur Bestimmung der optimalen Aktion für einen Zustand (in diesem Fall $s6$ nach der Iteration 2):
-
+Abschließen ein Beispiel zur Bestimmung der optimalen Aktion für einen Zustand. Zur Aktionsbestimmung wird die Gleichung $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ benutzt, welche unter allen Aktionen $a$ im Zustand $s$ diejenige Aktion mit dem größten Wert wählt. Hier am Beispiel des Zustands $s6$ nach Iteration 2 durchgeführt:
+\begin{align}
+	\pi(s6) &= argmax_{\text{\{links, oben, rechts, unten\}}} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]\\	
+	\pi(s6) &= argmax \{ -1 + 0,8 * -1,8, -1 + 0,8 * -1,8, -2 + 0,8 * -1, -1 + 0,8 * 0 \}\\
+	\pi(s6) &= argmax \{ -2,44, -2,44, -2,8, -1 \}\\
+	\pi(s6) &= unten
+\end{align}
+Am Ergebnis erkennt man dass für den Zustand $s6$ bereits nach der zweiten Iteration die optimale Policy gefunden wurde.
+Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s$ durchführen und dann überprüfen ob sich Änderungen gegenüber der vorherigen Policy ergeben haben.
 
 \subsubsection{Value Iteration}
 
