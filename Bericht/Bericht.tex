@@ -407,8 +407,7 @@ Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s
 \label{sec:monteCarloMethoden}
 
 \subsection{Grundidee}
-Bei den Monte Carlo Methoden besitzt man kein vollständiges Wissen über die Umgebung, sondern sammelt Erfahrungen durch tatsächliches oder simuliertes Interagieren mit der Umwelt.\\
-Bei den Monte Carlo Methoden gibt es nur episodische Aufgaben, da die Belohnung sichergestellt sein muss. Die Abschätzung der Zustandswerte und Strategie-Änderungen geschieht erst am Ende einer Episode (Wert eines Zustandes = kumulierte Belohnung bis zum Ende der Episode). Am Ende wird der Durchschnitt über alle Episoden gebildet.\\
+Bei den Monte Carlo Methoden besitzt man kein vollständiges Wissen über die Umgebung, sondern sammelt Erfahrungen durch tatsächliches oder simuliertes Interagieren mit der Umwelt. Zudem gibt es nur episodische Aufgaben, da die Belohnung sichergestellt sein muss. Die Abschätzung der Zustandswerte und Strategie-Änderungen geschieht erst am Ende einer Episode (Wert eines Zustandes = kumulierte Belohnung bis zum Ende der Episode). Am Ende wird der Durchschnitt über alle Episoden gebildet.\\
 \\
 Vorteile gegenüber Dynamic Programming:
 \begin{itemize}
@@ -417,22 +416,22 @@ Vorteile gegenüber Dynamic Programming:
 \item{Es ist einfach und effizient sich mittels der Monte Carlo Methoden auf eine kleine Teilmenge der Zustände zu fokussieren.}
 \end{itemize}
 
-Trotz der Unterschiede zwischen Dynamic Programming und Monte Carlo Methoden, werden die wichtigsten Ideen vom Dynamic Programming übernommen. Es werden die gleichen Value-Functions berechnet und über die gleichen Methoden versucht, die optimale Funktion zu bestimmen. In der Evaluation werden $V^{\pi}$ und $Q^{\pi}$ für eine Policy $\pi$ bestimmt und anschließen durch Improvement verbessert. Jeder dieser Schritte wird für die Monte Carlo Methoden übernommen, in dem nur beispielhafte Erfahrungen vorhanden sind, da die Umgebung unbekannt ist.
+Trotz der Unterschiede zwischen Dynamic Programming und Monte Carlo Methoden, werden die wichtigsten Ideen vom Dynamic Programming übernommen. Es werden die gleichen Value-Functions berechnet und über die gleichen Methoden versucht, die optimale Funktion zu bestimmen. Beim Dynamic Programming werden in der Evaluation $V^{\pi}$ und $Q^{\pi}$ für eine Policy $\pi$ bestimmt und anschließen durch Improvement verbessert. Jeder dieser Schritte wird für die Monte Carlo Methoden übernommen, in dem nur beispielhafte Erfahrungen vorhanden sind, da die Umgebung unbekannt ist.
 
 \subsection{Abgrenzung: Monte-Carlo-Simulation}
 Verfahren aus der Stochastik in dem sehr häufig durchgeführte Zufallsexperimente die Basis darstellen. Ziel ist es analytisch nicht oder zu sehr aufwändig lösbare Probleme mit Hilfe der Wahrscheinlichkeitstheorie numerisch zu lösen. Die Grundlage bildet das Gesetz der Großen Zahlen, wobei computergenerierte Vorgänge den Prozess in ausreichend häufigen Zufallsereignissen simulieren können.
 
 \subsection{Policy Evaluation}
-\subsubsection{Allgemeines}
-Wie bereits erwähnt ist der Wert eines Zustandes, der erwartete zukünftige kumulierte discounted reward, ausgehend vom betrachteten Zustand. Eine Möglichkeit diesen Wert aus Erfahrungen zu schätzen, ist es die erhaltenen Belohnungen zu mitteln, nachdem der Zustand besucht wurde. Je mehr Belohnungen für diesen Zustand beobachtet werden, desto näher sollte das Mittel zum erwarteten Wert konvergieren. Diese Idee verfolgen alle Monte Carlo Methoden.\\
+\subsubsection{Schätzung der State-Values $V^{\pi}(s)$}
+Wie in den Abschnitten zuvor bereits erwähnt, ist der Wert eines Zustandes, der erwartete zukünftige kumulierte discounted reward, ausgehend vom betrachteten Zustand. Eine Möglichkeit diesen Wert aus Erfahrungen zu schätzen, ist es die erhaltenen Belohnungen zu mitteln, nachdem der Zustand besucht wurde. Je mehr Belohnungen für diesen Zustand beobachtet werden, desto näher sollte das Mittel zum erwarteten Wert konvergieren. Diese Idee verfolgen alle Monte Carlo Methoden.\\
 Beide Verfahren First- und Every-visit MC konvergieren nach $V^{\pi}(s)$, wenn die Anzahl der Besuche ins unendliche geht (Gesetz der großen Zahlen).
 
 \subsubsection{Every-visit Monte Carlo}
-Die Every-visit MC Methode schätzt $V^{\pi}(s)$ über die Mittelwertbildung aller Belohnungen, die bei \textbf{jedem Besuch} vom Zustand $s$ in einer Episode erhalten werden.
+Die Every-visit MC Methode schätzt man $V^{\pi}(s)$ über die Mittelwertbildung aller Belohnungen, die bei \textbf{jedem Besuch} vom Zustand $s$ in einer Episode erhalten werden.
 
 \subsubsection{First-visit Monte Carlo}
-Innerhalb einer Episode wird der \textbf{erste Besuch} von $s$ als first-visit bezeichnet und die First-visit MC Methode bildet den Mittelwert nur über die ersten Besuche von $s$ innerhalb einer Episode.\\
-Der Algorithmus wird in Abbildung \ref{fig:FirstVisit} dargestellt. Es wird eine Episode für die Strategie $\pi$ ausgeführt und für jeden Zustand $s$ der Episode wird die Belohnung festgehalten, die dem ersten Besuch von $s$ folgt. Danach werden die Rewards gemittelt und $V^{\pi}(s)$ zugewiesen.
+Innerhalb einer Episode wird der \textbf{erste Besuch} von $s$ als First-visit bezeichnet und die First-visit MC Methode bildet den Mittelwert nur über die ersten Besuche von $s$ innerhalb einer Episode.\\
+Der Algorithmus wird in Abbildung \ref{fig:FirstVisit} dargestellt. Es wird eine Episode für die Strategie $\pi$ ausgeführt und für jeden Zustand $s$ der Episode wird die Belohnung $R$ festgehalten, die dem ersten Besuch von $s$ folgt. $R$ wird anschließend zu den aus vorherigen Episoden erhaltenen Rewards $Returns(s)$ addiert, woraufhin die Rewards gemittelt und $V^{\pi}(s)$ zugewiesen werden.
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/First-visit_MC.png}
@@ -440,17 +439,68 @@ Der Algorithmus wird in Abbildung \ref{fig:FirstVisit} dargestellt. Es wird eine
 	\label{fig:FirstVisit}
 \end{figure}
 
+\subsubsection{Schätzung der Action-Values $Q^{\pi}(s,a)$}
+Beim Dynamic Programming haben wir ein komplettes Modell der Umwelt und können hinreichend anhand der State-values entscheiden, welche Policy die geeignetste ist, indem wir immer einen Schritt voraus schauen und die Aktion wählen, die uns zu der besten Kombination aus Reward und Folgezustand bringt.\\
+Ohne dieses Modell benötigen wir zwingend die Schätzung der Aktionen um eine Policy bewerten zu können, deswegen ist eines der Hauptziele $Q^{*}$ zu schätzen.\\
+\\
+Das Problem hierbei ist alle möglichen $Q^{\pi}(s,a)$ zu schätzen. Die Methoden um einzelne $Q^{\pi}(s,a)$ Werte zu schätzen erfolgt genauso wie in den oben genannten First- und Every-visit Verfahren, wobei entweder das erste Auftreten des Zustandes $s$ mit Auswahl der Aktion $a$ oder jedes Auftreten der Kombination $s$ und $a$ über alle Episoden gemittelt wird. Auch hier konvergieren die Werte mit größer werdender Anzahl der Episoden.\\
+Das Problem hierbei ist, dass möglicherweise nicht alle Kombinationen aus Zustand $s$ und Aktion $a$ besucht werden. \textbf{Wenn $\pi$ eine deterministische Strategie ist, dann wird man nur jeweils eine Aktion pro Zustand beobachten} und die Erfahrung für andere Aktionen in dem entsprechenden Zustand wird sich nicht verbessern, da diese nicht betrachtet werden.\\
+Dies ist ein großes Problem, da es der Zweck der Action-value-function $Q^{\pi}(s,a)$ ist, in einem Zustand die richtige Aktion auswählen zu können. Um die verschiedenen Aktionen jedoch vergleichen zu können, müssen mit \textbf{allen Aktionen Erfahrungen gesammelt} worden sein.\\
+\\
+Dieses \textbf{\glqq maintaining exploration\grqq\xspace Problem}, dass für die Nutzung der Action-values die kontinuierliche Exploration sichergestellt sein muss, kann dadurch gelöst werden, dass jeder erste Schritt der Episode an einem zufälligen State-Action-Pair startet und jedes State-Action-Pair eine Wahrscheinlichkeit $\geq 0$ hat ausgewählt zu werden. Diese Annahme wird \textbf{Exploring starts} genannt.
+
 \subsection{Policy Improvement}
-\subsubsection{Monte Carlo ES (Estimation of Action Values)}
+\subsubsection{Generalized Policy Iteration}
+Die Idee hinter der Generalized Policy Iteration (GPI) ist die gleiche wie beim Dynamic Programming, nur dass hier anstelle der State-Value-Function $V$ die Action-Value-funtion $Q$ verwendet wird.\\
+Man hält jeweils eine approximierte Policy $\pi$ und Action-Value-funtion $Q$ vor. Die Action-Value-funtion wird immer wieder angepasst, sodass sie die Value-function der Policy besser approximiert und die Policy wird immer wieder auf Basis der Action-Value-funtion verbessert (vgl. Abbildung \ref{fig:MC_GPI}).
+
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.5\textwidth]{Bilder/MC_GPI.png}
+	\caption{Generalized Policy Iteration}
+	\label{fig:MC_GPI}
+\end{figure}
+
+\subsubsection{Monte Carlo ES (Exploring Starts)}
+Für die Monte Carlo Methoden ist es natürlich, dass die Bewertung (evaluation) und Verbesserung (improvement) zwischen den Episoden stattfindet. Nach jeder Episode werden die beobachteten Returns genutzt um die Strategie zu bewerten und danach wird die Strategie für alle besuchten Zustände in der Episode verbessert. Der Algorithmus hierzu wird in Abbildung \ref{fig:MC_ES} gezeigt.
+
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/MC_ES.png}
+	\caption{Monte Carlo Exploring Starts Algorithmus}
+	\label{fig:MC_ES}
+\end{figure}
+
+Der Algorithmus startet damit, dass $Q(s,a)$ und die Policy $\pi$ zufällig gewählt werden (exploring starts), sodass alle möglichen Kombinationen von $s$ und $a$ untersucht werden. Ähnlich wie beim First-visit MC in Abbildung \ref{fig:FirstVisit}, wird der Return des ersten Auftretens von Zustand $s$ und Aktion $a$ gespeichert und zu den bereits über alle Episoden beobachteten Belohnungen $Returns(s,a)$ addiert. Es folgt die Bildung des Mittelwertes für $Q(s,a)$ unabhängig davon welche Policy zum Zeitpunkt der Beobachtung aktiv war. Damit ist die Evaluation (b) beendet und es beginnt das Improvement (c) bei dem für einen Zustand $s$ die Aktion in der Policy $\pi$ hinterlegt wird, die den größten Wert $Q(s,a)$ hat.\\
 
 
 \subsubsection{On-Policy Monte Carlo}
-On-Policy Verfahren versuchen die Strategie zu bewerten und verbessern die genutzt wird um Entscheidungen zu treffen.\\
-Bei den den On-Policy Methoden gibt es nur eine Strategie, die über den nächsten Schritt entscheidet. Diese wird bewertet und verbessert. Hierbei besteht das \textbf{Control Problem} die optimale Strategie zu finden und das \textbf{Prediction Problem} die V-Werte oder Q-Werte für eine gegebene Strategie zu schätzen. 
+Beim zuvor vorgestellten Ansatz \glqq MC mit Exploring Starts\grqq\xspace wurde mittels zufälliger Wahl verschiedener Anfangszustände $s$ und Aktionen $a$ versucht, alle möglichen Kombinationen abzudecken. Dies ist aber eine unrealistische Annahme die so in der Realität nicht erfüllt werden kann. Der einzige Weg um sicherzustellen, dass alle Aktion unendlich häufig getestet werden ist der, dass der Agent diese auch weiterhin nutzt (nicht nur beim Start).\\
+Es gibt zwei Ansätze die dies sicherstellen, die On-Policy und Off-Policy Verfahren, von denen hier zunächst das erste vorgestellt wird.\\
+\\
+On-Policy Verfahren versuchen die Strategie zu bewerten und zu verbessern die genutzt wird um Entscheidungen zu treffen.\\
+Bei den den On-Policy Methoden gibt es \textbf{nur eine Strategie}, die über den nächsten Schritt entscheidet. Diese \textbf{Policy ist generell soft} was bedeutet, dass $\pi(s,a) > 0$ für alle $s \in S$ und $a \in A(s)$ (alle Kombinationen aus Zustand und Aktion sind vorhanden). In dem hier vorgestellten Algorithmus unter Abbildung \ref{fig:MC_OnPolicy} kommt eine \textbf{$\epsilon$-greedy Policy} zu Einsatz, die die meiste Zeit diejenige Aktion auswählt, die den größten erwarteten Gewinn verspricht und mit einer Wahrscheinlichkeit $\epsilon$ eine zufällige Aktion auswählt. Dadurch erhält man einen \textbf{Nichtdeterminismus bei der Auswahl von Aktionen}, wodurch alle Aktionen $a$ für einen Zustand $s$ gewählt werden können. $\epsilon$-greedy Strategien sind dabei ein Spezialfall von \textbf{$\epsilon$-soft Strategien} für die gilt $\pi(s,a) \geq \frac{\epsilon}{|A(s)|}$ für alle $s \in S$ und $a \in A(s)$ mit $\epsilon > 0$ (hierbei steht $\frac{\epsilon}{|A(s)|}$ für die Wahrscheinlichkeit aller Aktionen außer der günstigsten im Zustand $s$). Die günstigste Aktion erhält die Restwahrscheinlichkeit $1-\epsilon + \frac{\epsilon}{|A(s)|}$.\\
+\\
+Die Grundidee vom On-Policy Monte Carlo ist die gleiche wie bei der Generalized Policy Iteration (GPI). Es wird die First-visit MC Methode genutzt um die Action-value-function die Policy zu bestimmen, jedoch kann man nicht einfach die Policy auf Grundlage der Action-value-function verbessern, da dies dazu führen würde, dass nicht mehr alle Zustände exploriert würden. \textbf{Deswegen wird die Policy anstatt sie zu einer greedy Policy zu machen nur zu einer $\epsilon$-greedy Policy gemacht.} Für jede $\epsilon$-soft Policy $\pi$ ist garaniert, dass jede $\epsilon$-greedy Policy auf Basis von $Q^{\pi}$ besser oder gleich $\pi$ ist (sichergestellt durch das Policy Improvement Theorem).
+
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/MC_OnPolicy.png}
+	\caption{$\epsilon$-soft On-Policy Monte Carlo Algorithmus}
+	\label{fig:MC_OnPolicy}
+\end{figure}
 
 \subsubsection{Off-Policy Monte Carlo}
+Es sein angenommen, dass $V^{\pi}$ und $Q^{\pi}$ geschätzt werden sollen, aber nur Episoden der Policy $\pi'$ vorhanden sind, wobei gilt $\pi' \neq \pi$. Das Lernen einer Value-function für eine Policy $\pi$ auf Basis der Erfahrungen, die durch eine andere Policy $\pi'$ gesammelt wurden nennt man Off-Policy Verfahren.\\
+\\
 Im Verglich zum On-Policy Verfahren mit dem charakteristischen Feature, dass der Wert einer Policy dadurch geschätzt wird, indem man sie zur Kontrolle verwendet, werden beim Off-Policy Verfahren diese beiden Funktionen getrennt.\\
-Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour policy} genannt und ist evt. gar nicht abhängig von der Strategie welche bewertet (evaluated) und verbessert (improved) wird  \textbf{estimation policy}. Vorteil dieser Trennung ist, dass die estimation Policy deterministisch sein kann, währen die behaviour policy weiterhin alle möglichen Aktionen ausprobieren kann.
+Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour policy} genannt und ist evt. gar nicht abhängig von der Strategie welche bewertet (evaluated) und verbessert (improved) wird  \textbf{estimation policy}. Vorteil dieser Trennung ist, dass die \textbf{estimation Policy deterministisch} sein kann, währen die\textbf{ behaviour policy weiterhin alle möglichen Aktionen ausprobieren} kann.\\
+Der Algorithmus folgt dabei der behaviour policy und verbessert die estimation Policy. Um alle Möglichkeiten zu untersuchen muss, die \textbf{behaviour policy soft} sein. Abbildung \ref{fig:MC_OffPolicy} zeigt einen Off-Policy Monte Carlo Algorithmus.
+
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/MC_OffPolicy.png}
+	\caption{Off-Policy Monte Carlo Algorithmus}
+	\label{fig:MC_OffPolicy}
+\end{figure}
+
+Die behaviour policy $\pi'$ ist eine willkürliche soft policy. Die estimation policy $\pi$ ist greedy auf Basis von $Q$ und eine Schätzung von $Q^{\pi}$.
 
 \section{Temporal-Difference Learning}
 	\subsection{Motivation}
