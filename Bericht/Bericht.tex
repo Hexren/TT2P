@@ -454,7 +454,7 @@ Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour
 
 \section{Temporal-Difference Learning}
 	\subsection{Motivation}
-	Dynamic Programming \ref{sec:dynamicPrograming} und Monte Carlo Methoden \ref{sec:monteCarloMethoden} weisen Einschränkungen auf die im praktischen Einsatz die Größe der lösbaren Probleme stark einschränken. Dies sind im einzelnen:
+	Dynamic Programming (siehe: \ref{sec:dynamicPrograming}) und Monte Carlo Methoden (siehe: \ref{sec:monteCarloMethoden}) weisen Einschränkungen auf die im praktischen Einsatz die Größe der lösbaren Probleme stark einschränken. Dies sind im einzelnen:
 	\begin{description}
 		\item[DP]{Die Menge der Zustände ist bekannt und endlich}
 		\item[DP]{Die Menge der möglichen Aktionen \{a\} ist bekannt und endlich}
@@ -474,7 +474,7 @@ Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour
 
 \subsection{Vergleich TD Learning, DP und MC}
 Dynamic Programming betrachtet alle Zustände und benötigt ein Modell zur Bestimmung der Belohnungen und mit den Wahrscheinlichkeitsverteilungen für Folgezustände.\\
-Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell.\\
+Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
 Bei Monte Carlo Methoden wird bis zum Ende einer Episode gewartet, bevor Informationen über die Belohnung erhalten werden, wobei beim Dynamic Programming und beim TD Learning nur ein Schritt gegangen werden muss (\textbf{Bootstrapping}).
 
 \subsection{On-Policy TD Control: Sarsa}
@@ -499,6 +499,8 @@ Der Wert $\alpha$ ist hierbei ein konstanter Parameter für die Schrittweite. De
 	\caption{Sarsa: On Policy TD Control Algorithmus}
 	\label{fig:Sarsa}
 \end{figure}
+\todo{Change: Hier wird das Q Learning Bild nochmal gezeigt, es müßte das Sarsa Bild sein}
+
 
 \subsection{Off-Policy TD Control: Q-Learning}
 Beim Off-Policy Verfahren approximiert die gelernte \glqq action-value-function\grqq\xspace $Q$  direkt dir optimale Funktion $Q^{*}$ unabhängig davon welche Strategie verfolgt wird. Q-Learning ist ein Off-Policy TD Control Algorithmus und wird in Abbildung \ref{fig:QLearning} dargestellt.
@@ -545,6 +547,7 @@ Markelic Kap 3.4.1).
 	\label{fig:Trace}
 \end{figure}
 
+\listoftodos
 
 \end{document}
 
