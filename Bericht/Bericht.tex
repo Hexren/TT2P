@@ -168,6 +168,7 @@ Q^{\pi}(s,a)= E_{\pi} \{ \sum_{k=0}^\infty \gamma^k r_{(t+k+1)} | s_{t}=s, a_{t}
 Da die Funktion während des Lernes unbekannt ist, basiert die Erfahrung aus Paaren von $(s,a)$ in der Form \glqq Ich war im Zustand $s$ und habe $a$ ausgeführt und bin dadurch in $s'$ gelandet\grqq\xspace. Wenn man das Q-Wert Array hat und dieses durch Erfahrungen direkt aktualisiert, nennt man das \textbf{Q-Learning}.
 
 \section{Dynamic Programming}
+\label{sec:dynamicPrograming}
 \subsection{Definition}
 Unter dynamischer Programmierung versteht man eine Methode zum \textbf{algorithmischen Lösen von Optimierungsproblemen}. Der Begriff wurde von Richard Bellman eingeführt, weswegen auch häufig vom \glqq Bellman Prinzip der dynamischen Programmierung gesprochen\grqq\xspace wird. \textbf{Voraussetzungen} für die dynamische Programmierung sind:
 
@@ -403,6 +404,8 @@ Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s
 
 
 \section{Monte Carlo Methoden}
+\label{sec:monteCarloMethoden}
+
 \subsection{Grundidee}
 Bei den Monte Carlo Methoden besitzt man kein vollständiges Wissen über die Umgebung, sondern sammelt Erfahrungen durch tatsächliches oder simuliertes Interagieren mit der Umwelt.\\
 Bei den Monte Carlo Methoden gibt es nur episodische Aufgaben, da die Belohnung sichergestellt sein muss. Die Abschätzung der Zustandswerte und Strategie-Änderungen geschieht erst am Ende einer Episode (Wert eines Zustandes = kumulierte Belohnung bis zum Ende der Episode). Am Ende wird der Durchschnitt über alle Episoden gebildet.\\
@@ -411,7 +414,7 @@ Vorteile gegenüber Dynamic Programming:
 \begin{itemize}
 \item{Das optimale Verhalten kann direkt aus der Interaktion mit der Umgebung gelernt werden, ohne ein Modell der Umgebung vorhalten zu müssen.}
 \item{Sie können in Simulationen oder Beispiel-Modellen eingesetzt werden, man muss also kein komplettes Umgebungsmodell mit den Übergangswahrscheinlichkeiten erstellen.}
-\item{Es ist einfach und effizient sich mittels der Monte Carlo Methoden auf eine kleine Teilenge der Zustände zu fokussieren.}
+\item{Es ist einfach und effizient sich mittels der Monte Carlo Methoden auf eine kleine Teilmenge der Zustände zu fokussieren.}
 \end{itemize}
 
 Trotz der Unterschiede zwischen Dynamic Programming und Monte Carlo Methoden, werden die wichtigsten Ideen vom Dynamic Programming übernommen. Es werden die gleichen Value-Functions berechnet und über die gleichen Methoden versucht, die optimale Funktion zu bestimmen. In der Evaluation werden $V^{\pi}$ und $Q^{\pi}$ für eine Policy $\pi$ bestimmt und anschließen durch Improvement verbessert. Jeder dieser Schritte wird für die Monte Carlo Methoden übernommen, in dem nur beispielhafte Erfahrungen vorhanden sind, da die Umgebung unbekannt ist.
@@ -450,15 +453,24 @@ Im Verglich zum On-Policy Verfahren mit dem charakteristischen Feature, dass der
 Die Strategie die genutzt wird um Verhalten zu generieren wird \textbf{behaviour policy} genannt und ist evt. gar nicht abhängig von der Strategie welche bewertet (evaluated) und verbessert (improved) wird  \textbf{estimation policy}. Vorteil dieser Trennung ist, dass die estimation Policy deterministisch sein kann, währen die behaviour policy weiterhin alle möglichen Aktionen ausprobieren kann.
 
 \section{Temporal-Difference Learning}
-\subsection{Definition}
-Temporal Difference Learning ist eine \textbf{Vorhersagemethode}, welche hauptsächlich beim Reinforcement Learning eingesetzt wird und eine \textbf{Kombination aus Monte Carlo und Dynamic Programming} Ideen ist.\\
-Es stellt eine Monte Carlo Methode dar, da es seine \textbf{Umgebung auf Basis einer Strategie erkundet} und nutzt Dynamic Programming Techniken indem es auf Basis der zuvor \textbf{gelernten Schätzungen}, seinen \textbf{aktuelle Schätzung approximiert}. Der Algorithmus ist dabei an das \glqq temporal difference model\grqq\xspace tierischen Lernens angelehnt.\\
-\\
-TD Learning vereint die Vorteile von Dynaminc Programming (Simulation des nächsten Schritts auf Basis des internen Modells) und Monte Carlo Methoden (es wird kein Modell benötigt). Jedoch besteht auch hier das \textbf{Control Problem} die optimale Strategie zu finden.\\
-\\
-Als Vorhersagemethode nimmt Temporal Difference Learning es in Kauf, das \textbf{aufeinanderfolgende Vorhersagen häufig korrelieren}. Beim überwachten Lernen wird auf Basis vorhandener Beobachtungen gelernt und die Vorhersagen werden angepasst um bestimmte Beobachtungen genauer vorherzusagen zu können. Beim Temporal Difference Learning jedoch versucht man die Vorhersagen so anzupassen, dass diese genauere \textbf{Aussagen über Beobachtungen in der Zukunft} zulassen.\\
-\\
-Mathematisch gesprochen wird bei beiden Varianten versucht eine Kostenfunktion im Hinblick auf den Fehler bei der Vorhersage einer Variable $E[z]$ zu optimieren. Beim Standardverfahren nehmen wir für $E[z]=z$ an, wobei $z$ den aktuell beobachteten Wert darstellt. Beim Temporal Difference Learning wird hierfür ein Model verwendet, wobei $z$ den totalen Gewinn darstellt und $E[z]$ über eine Bellman-Gleichung gegeben die das Ergebnis schätzt.
+	\subsection{Motivation}
+	Dynamic Programming \ref{sec:dynamicPrograming} und Monte Carlo Methoden \ref{sec:monteCarloMethoden} weisen Einschränkungen auf die im praktischen Einsatz die Größe der lösbaren Probleme stark einschränken. Dies sind im einzelnen:
+	\begin{description}
+		\item[DP]{Die Menge der Zustände ist bekannt und endlich}
+		\item[DP]{Die Menge der möglichen Aktionen \{a\} ist bekannt und endlich}
+		\item[DP]{Die Belohnungen für alle Zustände müßen bekannt sein}
+		\item[DP]{Die Folgezustände in Abhängigkeit von Ausgangszustand und Aktion müßen bekannt sein}
+ 		\item[DP]{Die Menge der Zustände muß bekannt und endlich sein}
+		\item[MC]{Das Problem muß episodisch sein}
+		\item[MC]{Wissen aus vorhergehenden Episoden wird nicht verwendet (Rechenaufwand)}
+	\end{description}
+	
+	Temporal Difference Learning verbindet Konzepte der Dynamischen Programmierung und der Monte Carlo Methoden um die Nachteile zu vermeiden und die Vorteile (s.u.) der jeweiligen Methode beizubehalten.
+	
+	\begin{description}
+		\item[MC] Zustandraum kann zur Laufzeit erforscht werden
+		\item[DP] Verteilung der Belohnungen auf die korrekten, die ``verantwortlichen`` Zustände
+	\end{description}
 
 \subsection{Vergleich TD Learning, DP und MC}
 Dynamic Programming betrachtet alle Zustände und benötigt ein Modell zur Bestimmung der Belohnungen und mit den Wahrscheinlichkeitsverteilungen für Folgezustände.\\
