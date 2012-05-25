@@ -523,6 +523,7 @@ Der Agent soll vom Start zum Ziel gelangen und dabei der Klippe nicht zu nahe ko
 	\caption{Cliff Anwendung}
 	\label{fig:Cliff}
 \end{figure}
+\todo{check: Auf der cliff Abbildung \ref{fig:Cliff} sieht der optimale weg aus wie ca. -14 in Abbildung \ref{fig:Cliff_Result} kommt keiner näher als ca. -25 ?}
 
 Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning lernt die Werte für die optimale Strategie, wodurch der Agent nahe der Klippe entlangläuft und häufiger herunterfällt. Sarsa hingegen berücksichtigt die Auswahl der Aktionen und lernt den längeren aber sichereren Pfad. Auch wenn Q Learning die optimale Strategie lernt, ist die Performance schlechter als die von Sarsa.\\
 
@@ -532,6 +533,7 @@ Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning le
 	\label{fig:Cliff_Result}
 \end{figure}
 
+\todo{check: Oben steht das Q Learning den optimalen Pfad lernt, Q Learning hat in Abbildung \ref{fig:Cliff_Result} aber anscheinend einen schlechteren Reward als Sarsa das den sicherreren Pfad lernen soll ?}
 
 \subsection{Trace Decay Factor}
 Der Trace Decay Factor $\lambda$ ist ein \glqq accumulating eligibility trace\grqq\xspace welcher angibt wie häufig ein Zustand besichtigt wurde (vgl. Abbildung \ref{fig:Trace}). Wird ein Zustand weniger häufig besucht nimmt der Faktor über die Zeit hinweg ab.\\
