@@ -91,6 +91,26 @@ Für einen Zeitpunkt t gibt es eine Wahrscheinlichkeit $\pi_{t}(s,a)$ dafür, da
 \subsubsection{deterministische Strategie}
 Die deterministische Strategie mappt Zustände direkt auf Aktionen $\pi: S \rightarrow A$, wobei $S$ die Menge der Zustände und $A$ die Menge der Aktionen ist, mit $A(s)$ als mögliche Aktionen im Zustand $s$. (siehe Reflex Agent)
 
+\subsubsection{$\varepsilon$-greedy}
+Meistens wird die Aktion mit dem höchsten erwarteten Reward gewählt (greediest action), mit einer Wahrscheinlichkeit $\varepsilon$ jedoch zufällig eine andere (unabhängig vom erwarteten Reward).
+
+Wahrscheinlichkeitsvektor über die möglichen Aktionen in einem Zustand: $\vec x = (x_1, x_2, x_3, ..., x_n)$ mit $n$ als der Anzahl möglicher Aktionen und $x_i$ der Wahrscheinlichkeit, Aktion $i$ zu wählen.
+
+\[
+x_i=\begin{cases}
+  (1-\varepsilon) + (\varepsilon/n),  & \text{wenn }Q\text{ von }i\text{ am höchsten in }\vec x\text{ ist.}\\
+  \varepsilon/n, & \text{sonst.}
+\end{cases}
+\]
+
+\subsubsection{$\varepsilon$-soft}
+Meistens wird die Aktion mit dem höchsten erwarteten Reward gewählt, mit einer Wahrscheinlichkeit $1-\varepsilon$ jedoch zufällig eine andere (unabhängig vom erwarteten Reward).
+
+\subsubsection{softmax}
+Jede Aktion wird anhand ihres zu erwarteten Rewards gewichtet. Es wird zufällig eine Aktion ausgewählt, allerdings mit Betrachtung des Gewichts, sodass die Aktion, die den schlechtesten Reward bringt auch am seltensten gewählt wird. 
+
+Dies unterbindet den Nachteil von $\varepsilon$-greedy bzw. $\varepsilon$-soft, dass, abgesehen von der besten Aktion, immer zufällig irgendeine Aktion gewählt wird. Bei diesen beiden Ansätzen könnte es sein, dass bei der zufälligen Wahl der Aktion immer die schlechteste gewählt wird.
+
 \subsection{Belohnungen}
 \subsubsection{episodische Aufgaben}
 Der Return ist die Summe der \textbf{Rewards ab dem Zeitpunkt $t$}, bei dem $T$ ein abschließender Schritt wäre  $R_{t}= r_{(t+1)}+ r_{(t+2)}+ r_{(t+3)}+ ... +r_{T}$. Führt der Agent \textbf{episodische Aufgaben} aus, enden diese jeweils mit einem abschließenden Schritt. Hierbei wird zwischen der Menge der nicht-terminalen Zustände $S$ und der Menge aller Zustände $S^{+}$ unterschieden.
