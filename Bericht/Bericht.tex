@@ -546,11 +546,6 @@ Die behaviour policy $\pi'$ ist eine willkürliche soft policy. Die estimation p
 	\subsection{Arbeitsweise Umgangssprachlich}
 	Der Gedank bei Temporal Difference Learning alle Erwartungswerte für rewards beliebig zu füllen und dann beim durchlaufen eine Pfades die auf diesem liegenden Werte anhand ihrer der Abweichung $real - erwartet$ anzugleichen.
 
-\subsection{Vergleich TD Learning, DP und MC}
-Dynamic Programming betrachtet alle Zustände und benötigt ein Modell zur Bestimmung der Belohnungen und mit den Wahrscheinlichkeitsverteilungen für Folgezustände.\\
-Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
-Bei Monte Carlo Methoden wird bis zum Ende einer Episode gewartet, bevor Informationen über die Belohnung erhalten werden, wobei beim Dynamic Programming und beim TD Learning nur ein Schritt gegangen werden muss (\textbf{Bootstrapping}).
-
 \subsection{On-Policy TD Control: Sarsa}
 
 Im ersten Schritt wird die \glqq action-value-function\grqq\xspace $Q^{\pi}(s,a)$ für die aktuelle Strategie $\pi$ und alle Zustände $s$ und Aktionen $a$ gelernt. Man erhält somit eine alternierende Sequenz aus Zuständen und Zustands-Aktions Paaren (state-action-pairs), die in Abbildung \ref{fig:SA-Pairs} dargestellt ist.
@@ -627,6 +622,54 @@ Markelic Kap 3.4.1).
 	\caption{Trace Decay Factor}
 	\label{fig:Trace}
 \end{figure}
+
+\subsection{Vergleich der Verfahren}
+\subsubsection{Dynamic Programming}
+\textbf{Voraussetzungen}
+\begin{itemize}
+\item{Die Menge der Umweltzustände ist bekannt und ist endlich}
+\item{Die Menge der möglichen Aktionen \{a\} ist bekannt und endlich}
+\item{Belohnungen für alle Umweltzustände bekannt}
+\item{Folgezustände in Abhängigkeit von Ausgangszustand und Aktion bekannt}
+\end{itemize}
+
+\textbf{Vor- und Nachteile}
+\begin{description}
+\item[$+$] Findet garantiert eine optimale Strategie in polynomialer Zeit
+\item[$+$] Funktioniert bei heutigen Computern mit Millionen von Zuständen
+\item[$-$] Es wird ein vollständiges Modell der Umweltzustände, Aktionen und Belohnungen benötigt
+\item[$-$] Nur für diskrete Zustandsräume verwendbar
+\end{description}
+
+\subsubsection{Monte-Carlo-Methoden}
+Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
+
+\textbf{Voraussetzungen}
+\begin{itemize}
+\item Die zu lösende Aufgabe ist episodisch
+\end{itemize}
+
+\textbf{Vor- und Nachteile}
+\begin{description}
+\item[$+$] Kein Modell der Umgebung erforderlich. Stattdessen werden nur Episoden (Sequenzen aus Zuständen, Aktionen und Belohnungen) benötigt, die durch Interaktion mit der Umgebung generiert werden. Diese Episoden können durch einfache Modelle generiert werden, die häufig wesentlich einfacher zu finden sind, als vollständige Modelle der Umwelt mit expliziten Transitionswahrscheinlichkeiten
+\item[$+$] Robuster als DP gegenüber Verletzungen der Markov-Eigenschaft. Dies liegt daran, dass kein Bootstrapping stattfindet
+\item[$+$] Monte-Carlo-Methoden fokussieren sehr gut auf eine kleine Teilmenge der Umweltzustände
+\item[$-$] Nur für episodische Tasks geeignet, da die Belohnung immer erst am Ende einer Episode generiert wird
+\item[$-$] Ausreichende Exploration ist bei deterministischen Strategien ein Problem, da keine Alternativen Aktionen getestet werden. Dies kann z.B. mit zufälligen Zustands-Aktions-Paaren (sog. \emph{Exploring Starts}) verhindert werden
+\end{description}
+
+\subsubsection{Temporal Difference Learning}
+
+\textbf{Voraussetzungen}
+\begin{itemize}
+\item Todo
+\end{itemize}
+
+\textbf{Vor- und Nachteile}
+\begin{description}
+\item[$+$] Todo
+\item[$-$] Todo
+\end{description}
 
 \listoftodos
 
