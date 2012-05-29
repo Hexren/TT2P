@@ -13,7 +13,8 @@
 \usepackage[perpage,para,symbol*]{footmisc}
 \usepackage{listings} 
 \usepackage[pdfborder={0 0 0},colorlinks=false]{hyperref}
-\usepackage[numbers,square]{natbib}
+\usepackage{natbib}     % Neuimplementierung des \cite-Kommandos
+\usepackage{bibgerm}      % Deutsche Bezeichnungen
 \usepackage{color}
 \usepackage{colortbl}
 \usepackage{listings}
@@ -519,7 +520,11 @@ Der Algorithmus folgt dabei der behaviour policy und verbessert die estimation P
 
 Die behaviour policy $\pi'$ ist eine willkürliche soft policy. Die estimation policy $\pi$ ist greedy auf Basis von $Q$ und eine Schätzung von $Q^{\pi}$.
 
+\begin{quote}
 \section{Temporal-Difference Learning}
+	``...temporal-difference learning methods, are so called because changes are based on a difference, between estimates of a value functions at two different times.`` \cite[][]{sutton:2005}
+\end{quote}
+
 	\subsection{Motivation}
 	Dynamic Programming (siehe: \ref{sec:dynamicPrograming}) und Monte Carlo Methoden (siehe: \ref{sec:monteCarloMethoden}) weisen Einschränkungen auf die im praktischen Einsatz die Größe der lösbaren Probleme stark einschränken. Dies sind im einzelnen:
 	\begin{description}
@@ -680,6 +685,12 @@ Keine? \todo{Ich sehe hier keine Vorraussetzungen - jemand von euch? SM, ich auc
 \item[$+$] Einfachheit: Wenig Rechenaufwand, es werden nur einzelne Gleichungen benötigt, dadurch kleine Programme
 \item[$-$] Empfindlich gegenüber Verletzungen der Markov-Eigenschaft, da aktuelle Schätzungen auf vorherigen Schätzungen basieren (\emph{Bootstrapping}; Kann durch \emph{Eligibility Traces} behoben werden)
 \end{description}
+
+
+	\bibliographystyle{dinat} % Anpassung an deutsche Zitierweise
+                                          														% Alphabetische Sortierung, Abkürzungen
+  	\bibliography{Bericht}	% Literaturverzeichnis
+  	\input{literatur}
 
 \listoftodos
 
