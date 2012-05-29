@@ -330,13 +330,14 @@ Die Value Iteration kombiniert effektiv Evaluation und Improvement, der Algorith
 \end{figure}
 
 \subsection{Gemeinsamkeiten und Unterschiede von Policy und Value Iteration}
+\label{sec:dynamic_programming_unterschiede}
 Zuerst soll hier nochmal auf die Gemeinsamkeit von Policy und Value Iteration eingegangen werden. 
 Da beides Verfahren der Dynamischen Programmierung sind, benötigen sie ein vollständiges Modell der Welt bzw. der Umgebung.
 Es müssen also die direkte Belohnung $r$ und der Nachfolgezustand $s_{t+1}$ (welcher durch eine Funktion $s_{t+1} = \delta(s,a)$ bestimmt wird) zur Durchführung der Policy Evaluation Phase (bzw. Berechnung der State-Value-Function $V^{\pi}$) für beiden Verfahren bekannt sein.
 
 \subsubsection{Konzeptionelle Unterschiede}
-Wie bereits erwähnt wird bei der Value Iteration entfällt das wiederholte optimieren der Strategie $\pi$ bis zur Konvergenz der Strategie.
-Warum ist dies aber überhaupt möglich?\\
+Wie bereits erwähnt, entfällt bei der Value Iteration das wiederholte Optimieren der Strategie $\pi$ bis diese konvergiert.
+Aber warum kann man dies überhaupt wegfallen lassen?\\
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/KonvergenzVkPolicy}
@@ -344,21 +345,21 @@ Warum ist dies aber überhaupt möglich?\\
 	\label{fig:konvergenz}
 \end{figure}
 
-Hierzu muss das Konvergenzverhalten der State-Value-Function $V_{k}$ und einer Policy $\pi^{'}$ betrachten.
+Hierzu muss man das Konvergenzverhalten der State-Value-Function $V_{k}$ und einer Policy $\pi^{'}$ betrachten.
 Dieses ist in der Abbildung \ref{fig:konvergenz} für eine Gridworld und eine Greedy Policy, welche es zu optimieren gilt, dargestellt.
 In der Abbildung wurde nach jedem Schritt in der Policy Evaluation die Strategie $\pi(s)$ für jedes $s \in S$ optimiert.\\
-Hierbei fällt auf, das man bereits nach dem dritten Policy Evaluation Schritt eine optimale Strategy $\pi^{*}$ erreicht hat. 
-Da der Algorithmus für die Policy Iteration in der Policy Evaluation Phase (vgl. Abbildung \ref{fig:Policy}) bis zur Konvergenz (also sehr oft) die State-Value-Function $V$ berechnet, kann davon ausgegangen werden dass man bereits nach einer Policy Evaluation Phase die optimale Strategie $\pi^{*}$ gefunden hat.\\
+Hierbei fällt auf, dass man bereits nach dem dritten Policy Evaluation Schritt eine optimale Strategy $\pi^{*}$ erreicht hat. 
+Da der Algorithmus für die Policy Iteration in der Policy Evaluation Phase (vgl. Abbildung \ref{fig:Policy}) bis zur Konvergenz (also sehr oft) die State-Value-Function $V$ berechnet, kann davon ausgegangen werden, dass man bereits nach einer Policy Evaluation Phase die optimale Strategie $\pi^{*}$ gefunden hat.\\
 Auf Grund dieser Beobachtung kann die Policy Improvement Phase in der Value Iteration so optimiert werden, dass man für alle $s \in S$ nur noch die optimale Aktion $a$ anhand der Zustands-Werte von $s$ bestimmen muss.
 Dies wird im Algorithmus zur Value Iteration (vgl. Abbildung \ref{fig:Value}) mit der Zeile $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ ausgedrückt.\\
 
 Ein anderer Blickwinkel auf die Value Iteration führt über die Bellman-Optimalitäts-Gleichung $V^{*}(s) = \underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$.
-Durch die Auswahl der optimalen Aktion $\underset{\text{a}}{max}$ wird die Konvergenz in der Policy Evaluation Phase deutlich verbessert und es müssen weniger Iterationen (bessere Performance) gemacht werden.\\
+Durch die Auswahl der Aktion mit der größten Belohnung $\underset{\text{a}}{max}$ wird die Konvergenz in der Policy Evaluation Phase deutlich verbessert und es müssen weniger Iterationen (bessere Performance) gemacht werden.\\
 
 Das Ausnutzen der beiden beschriebenen Verbesserungen überführen den Algorithmus der Policy Iteration hin zur Value Iteration. 
 
 \subsection{Anwendung Policy und Value Iteration}
-In diesem Abschnitt soll anhand von Beispielen erklärt werden wie die beiden Algorithmen ihre Berechnung durchführen.
+In diesem Abschnitt soll anhand von Beispielen erklärt werden, wie die beiden Algorithmen ihre Berechnung durchführen.
 
 \subsubsection{Beschreibung der Randbedingungen}
 \begin{itemize}
@@ -374,6 +375,7 @@ In diesem Abschnitt soll anhand von Beispielen erklärt werden wie die beiden Al
 Es sind jeweils die nächsten beiden Iterationen der Verfahren zu berechnen.
 
 \subsubsection{Policy Iteration}
+\label{sec:anwendung_policy_iteration}
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/PolicyIterationAufgabe}
@@ -398,7 +400,7 @@ Berechnung Zustand 1:
 Da bei der zugrundeliegenden Zufallsstrategie jede Aktion eine identische Wahrscheinlichkeit besitzt (alle $\frac{1}{4}$) kann die Wahrscheinlichkeit aus der Summe in der eckigen Klammer herausgezogen werden.
 Damit entspricht die $\frac{1}{4}$ dem Ausdruck $\sum_{a} \pi(s,a)$. 
 Da es sich um eine deterministische Umwelt handelt, ist die Wahrscheinlichkeit für den Übergang von $s$ nach $s^{'}$ ($P^a_{ss^{'}}$) immer 1 und damit in der Berechnung nicht ersichtlich ($\frac{1}{4}$ würde mit 1 multipliziert werden).\\
-Die Summe $\sum_{a}$ stellt das Auswerten aller Aktionen $a$.
+Die Summe $\sum_{a}$ stellt das Auswerten aller Aktionen $a$ dar.
 Jeder Ausdruck in den runden Klammern entspricht einer Aktion, die Reihenfolge in der vorgegangen wurde lautet: links, oben, rechts, unten.\\
 Innerhalb der runden Klammer wird für jeder Aktion der direkte Reward $R^a_{ss^{'}}$ und das Produkt aus Discountingfaktor und Wert des nächsten Zustands $\gamma V_{k} (s^{'})$ berechnet.
 Im Beispiel wird bei der Aktion "`links"' ein Reward von -2 und und der Wert von $s1$, da wir mit der Aktion außerhalb der Umwelt landen und in $s1$ verbleiben, genommen.
@@ -418,22 +420,29 @@ Für die zweite Iteration wird der Wert für den Zustand s6 mit den gerade berec
 
 In der Policy Evaluation Phase würde man anschließen solange iterieren bis die Zustands-Werte konvergieren und dann mit der Policy Improvement Phase beginnen.\\
 In ihr wird für alle Zustände $s \in S$ die optimale Aktion über 
-$argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$. 
+$argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ bestimmt. 
 Danach wird die verbesserte Policy $\pi(s)$ mit der vorherigen Policy $b$ verglichen.
-Sollten sich noch Änderungen ergeben haben wird eine neue Iteration mit Policy Evaluation und Policy Improvement begonnen.
+Sollten sich noch Änderungen ergeben haben, wird eine neue Iteration mit Policy Evaluation und Policy Improvement begonnen.
 Unterscheiden sich die beiden Policies nicht, so wurde die optimale Strategie gefunden.\\
 
-Abschließen ein Beispiel zur Bestimmung der optimalen Aktion für einen Zustand. Zur Aktionsbestimmung wird die Gleichung $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ benutzt, welche unter allen Aktionen $a$ im Zustand $s$ diejenige Aktion mit dem größten Wert wählt. Hier am Beispiel des Zustands $s6$ nach Iteration 2 durchgeführt:
+Abschließend ein Beispiel zur Bestimmung der optimalen Aktion für einen Zustand. Zur Aktionsbestimmung wird die Gleichung $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ benutzt, welche unter allen Aktionen $a$ im Zustand $s$ diejenige Aktion mit dem größten Wert wählt. Hier am Beispiel des Zustands $s6$ nach Iteration 2 durchgeführt:
 \begin{align}
 	\pi(s6) &= argmax_{\text{\{links, oben, rechts, unten\}}} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]\\	
-	\pi(s6) &= argmax \{ -1 + 0,8 * -1,8, -1 + 0,8 * -1,8, -2 + 0,8 * -1, -1 + 0,8 * 0 \}\\
-	\pi(s6) &= argmax \{ -2,44, -2,44, -2,8, -1 \}\\
+	\pi(s6) &= argmax \{ -1 + 0,8 * -2,65; -1 + 0,8 * -2,65; -2 + 0,8 * -2,1; -1 + 0,8 * 0 \}\\
+	\pi(s6) &= argmax \{ -3,12; -3,12; -3,68; -1 \}\\
 	\pi(s6) &= unten
 \end{align}
+
 Am Ergebnis erkennt man dass für den Zustand $s6$ bereits nach der zweiten Iteration die optimale Policy gefunden wurde.
 Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s$ durchführen und dann überprüfen ob sich Änderungen gegenüber der vorherigen Policy ergeben haben.
 
 \subsubsection{Value Iteration}
+\label{sec:anwendung_value_iteration}
+
+Wie bereits im Abschnitt \ref{sec:dynamic_programming_unterschiede} erwähnt wurde, wird bei der Value Iteration in jedem Zustand die Aktion mit der größten Belohnung $V^{*}(s) = \underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ bestimmt und so eine schnellere Konvergenz im Vergleich zur Policy Iteration erreicht.\\
+In diesem Abschnitt wird dieses Verfahren, analog zu der in Abschnitt \ref{sec:anwendung_policy_iteration} beschriebenen Aufgabenstellung, beispielhaft für zwei aufeinander folgenden Iterationen erläutert.
+Die Ausgangssituation und die Ergebnisse sind in Abbildung \ref{fig:value_aufgabe} dargestellt.
+Zum Vergleich wird hier auch der selbe Zustand $s6$ wie bei der Value Iteration betrachtet.\\ 
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/ValueIterationAufgabe}
@@ -441,6 +450,81 @@ Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s
 	\label{fig:value_aufgabe}
 \end{figure}
 
+Zur Berechnung der Aktion mit der größten Belohnung gehen wir von der Formel $\underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ aus.
+Man betrachtet dabei in jeder Iteration alle Zustände und pro Zustand werden die direkten Belohnungen für alle Aktionen und die Zustandsbewertungen aus der vorherigen Iteration $V_{k}(s^{'})$ betrachtet.
+Für die erste Iteration und Zustand $s6$ sieht das wie folgt aus:
+
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-1 + 0,8 * 0 & \text{links} \\ 
+		-1 + 0,8 * 0 & \text{oben} \\
+		-2 + 0,8 * 0 & \text{rechts} \\
+		-1 + 0,8 * 0 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-1 & \text{links} \\ 
+		-1 & \text{oben} \\
+		-2 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ link, oben, unten \} = -1
+\end{align}
+
+Im Zustand $s6$ liefern die Aktionen $ links, oben, unten$ die größte direkte Belohnung von $-1$ so dass $V_{k+1}(s) = -1$ ist.
+Für die zweite Iteration wird genau so vorgegangen:
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-1 + 0,8 * -1 & \text{links} \\ 
+		-1 + 0,8 * -1 & \text{oben} \\
+		-2 + 0,8 * -1 & \text{rechts} \\
+		-1 + 0,8 * 0 &  \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-1,8 & \text{links} \\ 
+		-1,8 & \text{oben} \\
+		-2,8 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ unten \} = -1
+\end{align}
+
+In diesem Fall ändert sich an dem für $V_{k+1}(s)$ berechneten Wert nichts, jedoch ist jetzt klar dass im Zustand $s6$ die Aktion $unten$ die optimale Aktion mit der größten Belohnung ist.
+Dieses könnte auch nochmal mit der Formel $\pi(s6) = argmax_{\text{\{links, oben, rechts, unten\}}} \sum_{s^{'}} P^a_{ss^{'}}$ nach der Konvergenz der Zustands-Werte explizit berechnet werden.\\
+Hier zum Vergleich, dass sich bei der Berechnung die Zustands-Werte auch ändern können, die beiden Iteration für den Zustand $s5$:
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-2 + 0,8 * 0 & \text{links} \\ 
+		-2 + 0,8 * 0 & \text{oben} \\
+		-1 + 0,8 * 0 & \text{rechts} \\
+		-1 + 0,8 * 0 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-2 & \text{links} \\ 
+		-2 & \text{oben} \\
+		-1 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ rechts, unten \} = -1
+\end{align}
+
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-2 + 0,8 * -1 & \text{links} \\ 
+		-2 + 0,8 * -1 & \text{oben} \\
+		-1 + 0,8 * -1 & \text{rechts} \\
+		-1 + 0,8 * -1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-2,8 & \text{links} \\ 
+		-2,8 & \text{oben} \\
+		-1,8 & \text{rechts} \\
+		-1,8 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ rechts, unten \} = -1,8
+\end{align}
+
+Auch in für diesen Zustand hat man nach der zweiten Iteration bereits die optimale Strategie gefunden. 
+Im Zustand $s5$ ist es nämlich egal ob man $rechts$ oder nach $unten$ geht,so dass damit die optimalen Aktionen ${rechts, unten}$ sind.
 
 \section{Monte Carlo Methoden}
 \label{sec:monteCarloMethoden}
@@ -628,24 +712,47 @@ Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning le
 
 \todo{check: Oben steht das Q Learning den optimalen Pfad lernt, Q Learning hat in Abbildung \ref{fig:Cliff_Result} aber anscheinend einen schlechteren Reward als Sarsa das den sicherreren Pfad lernen soll ?}
 
-\subsection{Trace Decay Factor}
-\subsubsection{Zusammenfassung Umgangssprachlich}
-Der Trace decay faktor gibt an mit welcher Stärke eine in Zustand $s_t$ beobachtete Abweichung der real gemessen Rewards von den erwarteten Rewards $V(s_t)$ in die erwarteten Rewards der Zustände über die zu $s$ gelangt wurde eingerechnet wird.
-Hierzu wird ein Trace Decay Factor $\lambda$ für jeden Zustand geführt der steigt wenn ein Zustand besucht wird und sonst für diesen abnimmt und in der Regel einen Multiplikator $\leq 1$ darstellt. Mit $\lambda$ multipliziert reduziert sich also der in $s_t$ gefunden Fehler für die Zustände $s_{t-n}$ (solche über die zu $s_t$ gelangt wurde) in der Regel wird der Fehler umso mehr abgeschwächt umsoweiter $s_{t-n}$ in der Vergangenheit liegt..
+%\subsection{Trace Decay Factor}
+%\subsubsection{Zusammenfassung Umgangssprachlich}
+%Der Trace decay faktor gibt an mit welcher Stärke eine in Zustand $s_t$ beobachtete Abweichung der real gemessen Rewards von den erwarteten Rewards $V(s_t)$ in die erwarteten Rewards der Zustände über die zu $s$ gelangt wurde eingerechnet wird.
+%Hierzu wird ein Trace Decay Factor $\lambda$ für jeden Zustand geführt der steigt wenn ein Zustand besucht wird und sonst für diesen abnimmt und in der Regel einen Multiplikator $\leq 1$ darstellt. Mit $\lambda$ multipliziert reduziert sich also der in $s_t$ gefunden Fehler für die Zustände $s_{t-n}$ (solche über die zu $s_t$ gelangt wurde) in der Regel wird der Fehler umso mehr abgeschwächt umsoweiter $s_{t-n}$ in der Vergangenheit liegt..
 
-\subsubsection{Referenzen/Bilder}
-Der Trace Decay Factor $\lambda$ ist ein \glqq accumulating eligibility trace\grqq\xspace welcher angibt wie häufig ein Zustand besichtigt wurde (vgl. Abbildung \ref{fig:Trace}). Wird ein Zustand weniger häufig besucht nimmt der Faktor über die Zeit hinweg ab.\\
+%\subsubsection{Referenzen/Bilder}
+%Der Trace Decay Factor $\lambda$ ist ein \glqq accumulating eligibility trace\grqq\xspace welcher angibt wie häufig ein Zustand besichtigt wurde (vgl. Abbildung \ref{fig:Trace}). Wird ein Zustand weniger häufig besucht nimmt der Faktor über die Zeit hinweg ab.
+
 \subsection{Eligibility Traces}
-Werden in TD Learning Algorithmen verwendet und ist ein Konzept, um den in einem TD
+Eligibility Traces (ET) werden in TD Learning Algorithmen verwendet und ist ein Konzept, um den in einem TD
 Schritt errechneten Fehler auch an vorhergehende Schritte weiterzureichen (vgl. Studienarbeit
 Markelic Kap 3.4.1).
 
+\subsubsection{Trace Decay Faktor}
+Der Trace Decay Faktor $\lambda$ gibt an, wie stark die Werte im ET pro Schritt reduziert werden sollen.
+
+\subsubsection{Ablauf}
+Das Vorgehen ist dabei wie folgt: Für jeden besuchten Zustand wird im ET der Wert für den Zustand um 1 erhöht (Zeile 8 im Sarsa($\lambda$) Pseudo-Code). Nach jedem Schritt wird der Fehler $\delta$ auf den Zustand aufaddiert (Zeile 10) und der komplette ET wird um den Trace Decay Faktor sowie den Diskountfaktor reduziert (Zeile 11).
+Dadurch, dass Zeile 11 für jeden Schritt ausgeführt wird, werden die späteren Zustände im Trace weniger oft reduziert und fallen somit stärker ins Gewicht. 
+
+Bild \ref{fig:Trace} zeigt, wie der Wert eines Zustandes mit jedem Besuch steigt und gleich wieder nach jedem Schritt reduziert wird.
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/TraceDecay.png}
-	\caption{Trace Decay Factor}
+	\caption{Zustandswerte im Eligibility Trace}
 	\label{fig:Trace}
 \end{figure}
+Bild \ref{fig:Trace1} zeigt, wie später besuchte Zustände schwächer reduziert werden und dadurch größere Auswirkung auf das Erlernte haben.
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/ETBild.jpg}
+	\caption{Auswirkung des ET auf gewählte Aktionen}
+	\label{fig:Trace1}
+\end{figure}
 
+\subsection{Sarsa($\lambda$) Algorithmus}
+Sarsa($\lambda$) ist ein On-Policy TD-Learning Algorithmus, der das Konzept der Eligibility Traces (ETs) verwendet.
+Für jeden Schritt von einem Zustand in den nächsten wird ein $\delta$ berrechnet und im ET gemerkt welcher Zustand besucht wurde. Anschließend wird das $\delta$ abgeschwächt auf den Zustand verrechnet und der ET reduziert.
+\begin{figure}[htbp]
+	\centering	\includegraphics[width=0.8\textwidth]{Bilder/SarsaLambda.jpg}
+	\caption{Der Sarsa($\lambda$) Pseudocode}
+	\label{fig:SarsaLambda}
+\end{figure}
 \subsection{Vergleich der Verfahren}
 Drei drei vorher vorgestellten Verfahren dynamische Programmierung, Monte-Carlo-Methoden und Temporal Difference Learning werden in diesem Abschnitt nochmal im Hinblick auf ihre Vor- und Nachteile verglichen.
 
