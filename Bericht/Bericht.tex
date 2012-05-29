@@ -199,9 +199,6 @@ Unter dynamischer Programmierung versteht man eine Methode zum \textbf{algorithm
 \item{Folgezustände in Abhängigkeit von Ausgangszustand und Aktion bekannt}
 \end{itemize}
 
-\todo{Sieht das nur so aus oder kann ich mit diesem ganzen Wissen auch einen $A^*$ machen ? OS}
-
-
 Dynamische Programmierung lässt sich dann erfolgreich einsetzen, wenn das Optimierungsproblem aus \textbf{vielen gleichartigen Teilproblemen} besteht und sich die optimale Lösung des Problems aus den optimalen Lösungen der Teilprobleme zusammensetzt. Hierfür werden zunächst die optimalen Lösungen der \textbf{kleinsten Teilprobleme direkt berechnet} und dann geeignet zu einer Lösung eines \textbf{nächstgrößeren Teilproblems zusammengesetzt}. \textbf{Teilergebnisse werden in einer Tabelle} gespeichert, um bei nachfolgenden Berechnungen gleichartiger Teilprobleme auf die Ergebnisse zurückgreifen zu können. Bei konsequentem Einsatz vermeidet die dynamische Programmierung kostspielige Rekursionen weil bekannte Teilergebnisse wiederverwendet werden.\\
 Zum Einsatz kommt die dynamische Programmierung in der Regelungstheorie und verwandten Gebieten und wird dort eingesetzt um beispielsweise Gleichungen herzuleiten (Hamilton-Jacobi-Bellman-Gleichung), deren Lösung den optimalen Wert ergibt.
 Dynamic Programming hat hauptsächlich einen theoretischen Stellenwert, da die Annahme der Markov-Eigenchaft
