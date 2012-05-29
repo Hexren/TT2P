@@ -697,16 +697,17 @@ Der Agent soll vom Start zum Ziel gelangen und dabei der Klippe nicht zu nahe ko
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/Cliff.png}
-	\caption{Cliff Anwendung}
+	\caption{Cliff Anwendung \cite[Vgl.][S. 186]{sutton:2005}}
 	\label{fig:Cliff}
 \end{figure}
 \todo{check: Auf der cliff Abbildung \ref{fig:Cliff} sieht der optimale weg aus wie ca. -14 in Abbildung \ref{fig:Cliff_Result} kommt keiner näher als ca. -25 ?}
 
-Die Ergebnisse sind Abbildung \ref{fig:Cliff_Result} zu entnehmen. Q Learning lernt die Werte für die optimale Strategie, wodurch der Agent nahe der Klippe entlangläuft und häufiger herunterfällt. Sarsa hingegen berücksichtigt die Auswahl der Aktionen und lernt den längeren aber sichereren Pfad. Auch wenn Q Learning die optimale Strategie lernt, ist die Performance schlechter als die von Sarsa.\\
+
+Abbildung \ref{fig:Cliff_Result} ist zu entnehmen wie sich mit $\epsilon = 0.1$ der durchschnittliche Reward für Sarsa bzw. Q Learning entwickelt. Es ist festzustellen das bei konstantem $\epsilon$ die von Q Learning ausgeführte exploriation dazu führt, dass der durchschnittle Reward schlechter als bei Sarsa ist. Dies da zwar der potentiell optimalere Weg direkt am Kliff entlang gelernt wird, aber in der exploriation dann regelmäßig über das cliff hinausgegangen wird. Würde man $\epsilon$ kontinuierlich verringern würden beide Lösungen sich asympthotisch der optimalen anpassen \cite[Vgl.][S. 186,187]{sutton:2005}. \todo{check: wieso passen sie sich an ? OS}
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/Cliff_Ergebnisse.png}
-	\caption{Vergleich Sarsa und Q-Learning}
+	\caption{Vergleich Sarsa und Q-Learning \cite[Vgl.][S. 186]{sutton:2005}}
 	\label{fig:Cliff_Result}
 \end{figure}
 
