@@ -12,7 +12,7 @@
 \usepackage{lastpage}
 \usepackage[perpage,para,symbol*]{footmisc}
 \usepackage{listings} 
-\usepackage[pdfborder={0 0 0},colorlinks=false]{hyperref}
+%\usepackage[pdfborder={0 0 0},colorlinks=false]{hyperref}
 \usepackage{natbib}     % Neuimplementierung des \cite-Kommandos
 \usepackage{bibgerm}      % Deutsche Bezeichnungen
 \usepackage{color}
@@ -27,20 +27,20 @@
 \usepackage{nameref}
 \usepackage{titleref}
  
-\usepackage[]{hyperref}
-	%pdftex,	
-	%bookmarks,
-	%bookmarksopen=false,
-	%bookmarksnumbered,
-	%citecolor=blue,
-	%linkcolor=black, %orig: blue
-	%urlcolor=blue,
-	%filecolor=blue,
-	%linktocpage,
-  	%pdfstartview=Fit,                                  % startet mit Ganzseitenanzeige    
-	%pdfauthor={Pahl, Roetting, Jaeger, Steenbuck, Muenchow, Noetzel, Steudte}]{hyperref}
-    %]{hyperref}
-%\usepackage{hyperref}
+\usepackage[colorlinks,
+	pdftex,	
+	bookmarks,
+	bookmarksopen=false,
+	bookmarksnumbered,
+	citecolor=blue,
+	linkcolor=black, %orig: blue
+	urlcolor=blue,
+	filecolor=blue,
+	linktocpage,
+    pdfstartview=Fit,                                  % startet mit Ganzseitenanzeige    
+	pdfauthor={Pahl, Roetting, Jaeger, Steenbuck, Muenchow, Noetzel, Steudte}]{hyperref}
+    
+
 
 \usepackage[all]{hypcap}
 \hypersetup{pdfsubject={TT2 Problemstellung 1 : Zusammenfassung}, pdftitle={Reinforcement Learning}, pdfkeywords={Framework, Monte Carlo Methode, Dynamic Programming, Temporal Difference Learning, Reinforcement Learning}}
@@ -57,7 +57,7 @@
 \title{\titletext}
 
 %changehere Datum der Übung
-\date{12.05.2012}
+\date{30.05.2012}
 
 \pagestyle{scrheadings}
 %changehere
