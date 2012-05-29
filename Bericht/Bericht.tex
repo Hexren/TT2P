@@ -624,6 +624,8 @@ Markelic Kap 3.4.1).
 \end{figure}
 
 \subsection{Vergleich der Verfahren}
+Drei drei vorher vorgestellten Verfahren dynamische Programmierung, Monte-Carlo-Methoden und Temporal Difference Learning werden in diesem Abschnitt nochmal im Hinblick auf ihre Vor- und Nachteile verglichen.
+
 \subsubsection{Dynamic Programming}
 Dynamische Programmierung berechnet optimale Strategien auf Basis eines vollständigen Modells der Umgebung. Die Zustände und Zustandsübergänge der Umgebung müssen dabei einen Markov-Entscheidungsprozess darstellen.
 
@@ -662,7 +664,7 @@ Monte Carlo Methoden betrachten jeweils nur eine Sequenz von Zustandsübergänge
 \item[$+$] Monte-Carlo-Methoden fokussieren sehr gut auf eine kleine Teilmenge der Umweltzustände
 \item[$+$] Garantierte (asymptotische) Konvergenz zur optimalen Strategie
 \item[$-$] Nur für episodische Tasks geeignet, da die Belohnung immer erst am Ende einer Episode generiert wird
-\item[$-$] Ausreichende Exploration ist bei deterministischen Strategien ein Problem, da keine Alternativen Aktionen getestet werden. Dies kann z.B. mit zufälligen Zustands-Aktions-Paaren (sog. \emph{Exploring Starts}) verhindert werden
+\item[$-$] Ausreichende Exploration ist bei deterministischen Strategien ein Problem, da keine alternativen Aktionen getestet werden. Dies kann z.B. durch den Start mit zufälligen Zustands-Aktions-Paaren (sog. \emph{Exploring Starts}) verhindert werden
 \end{description}
 
 \subsubsection{Temporal Difference Learning}
