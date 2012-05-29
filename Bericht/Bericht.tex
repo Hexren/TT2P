@@ -21,17 +21,38 @@
 \usepackage{a4wide}
 \usepackage{xspace}
 \usepackage{listings}
-\usepackage{hyperref}
 \usepackage{epstopdf}
 \usepackage{amsmath}
 \usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}
+\usepackage{nameref}
+\usepackage{titleref}
+ 
+\usepackage[]{hyperref}
+	%pdftex,	
+	%bookmarks,
+	%bookmarksopen=false,
+	%bookmarksnumbered,
+	%citecolor=blue,
+	%linkcolor=black, %orig: blue
+	%urlcolor=blue,
+	%filecolor=blue,
+	%linktocpage,
+  	%pdfstartview=Fit,                                  % startet mit Ganzseitenanzeige    
+	%pdfauthor={Pahl, Roetting, Jaeger, Steenbuck, Muenchow, Noetzel, Steudte}]{hyperref}
+    %]{hyperref}
+%\usepackage{hyperref}
+
+\usepackage[all]{hypcap}
+\hypersetup{pdfsubject={TT2 Problemstellung 1 : Zusammenfassung}, pdftitle={Reinforcement Learning}, pdfkeywords={Framework, Monte Carlo Methode, Dynamic Programming, Temporal Difference Learning, Reinforcement Learning}}
+
+
 
 \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, breaklines=true, showstringspaces=false} 
 
 %changehere
 \def\titletext{TT2 Problemstellung 1 : Zusammenfassung}
 \def\titletextshort{Problemstellung 1}
-\author{Carsten Noetzel}
+\author{Pascal Jäger, Stefan Münchow, Armin Steudte,\\ Milena Rötting, Sven-Andjes Pahl, Carsten Noetzel, Oliver Steenbuck}
 
 \title{\titletext}
 
@@ -43,7 +64,7 @@
 \ihead{TT2, Neitzke}
 \ifoot{Generiert am:\\ \today}
 
-\cfoot{Carsten Noetzel}
+\cfoot{Pascal Jäger, Stefan Münchow,\\ Armin Steudte, Milena Rötting,\\ Sven-Andjes Pahl, Carsten Noetzel, Oliver Steenbuck}
 
 
 \ohead[]{\titletextshort}
