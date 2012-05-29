@@ -311,6 +311,7 @@ Die Value Iteration kombiniert effektiv Evaluation und Improvement, der Algorith
 \end{figure}
 
 \subsection{Gemeinsamkeiten und Unterschiede von Policy und Value Iteration}
+\label{sec:dynamic_programming_unterschiede}
 Zuerst soll hier nochmal auf die Gemeinsamkeit von Policy und Value Iteration eingegangen werden. 
 Da beides Verfahren der Dynamischen Programmierung sind, benötigen sie ein vollständiges Modell der Welt bzw. der Umgebung.
 Es müssen also die direkte Belohnung $r$ und der Nachfolgezustand $s_{t+1}$ (welcher durch eine Funktion $s_{t+1} = \delta(s,a)$ bestimmt wird) zur Durchführung der Policy Evaluation Phase (bzw. Berechnung der State-Value-Function $V^{\pi}$) für beiden Verfahren bekannt sein.
@@ -334,7 +335,7 @@ Auf Grund dieser Beobachtung kann die Policy Improvement Phase in der Value Iter
 Dies wird im Algorithmus zur Value Iteration (vgl. Abbildung \ref{fig:Value}) mit der Zeile $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ ausgedrückt.\\
 
 Ein anderer Blickwinkel auf die Value Iteration führt über die Bellman-Optimalitäts-Gleichung $V^{*}(s) = \underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$.
-Durch die Auswahl der optimalen Aktion $\underset{\text{a}}{max}$ wird die Konvergenz in der Policy Evaluation Phase deutlich verbessert und es müssen weniger Iterationen (bessere Performance) gemacht werden.\\
+Durch die Auswahl der Aktion mit der größten Belohnung $\underset{\text{a}}{max}$ wird die Konvergenz in der Policy Evaluation Phase deutlich verbessert und es müssen weniger Iterationen (bessere Performance) gemacht werden.\\
 
 Das Ausnutzen der beiden beschriebenen Verbesserungen überführen den Algorithmus der Policy Iteration hin zur Value Iteration. 
 
@@ -355,6 +356,7 @@ In diesem Abschnitt soll anhand von Beispielen erklärt werden wie die beiden Al
 Es sind jeweils die nächsten beiden Iterationen der Verfahren zu berechnen.
 
 \subsubsection{Policy Iteration}
+\label{sec:anwendung_policy_iteration}
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/PolicyIterationAufgabe}
@@ -415,6 +417,12 @@ Am Ergebnis erkennt man dass für den Zustand $s6$ bereits nach der zweiten Iter
 Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s$ durchführen und dann überprüfen ob sich Änderungen gegenüber der vorherigen Policy ergeben haben.
 
 \subsubsection{Value Iteration}
+\label{sec:anwendung_value_iteration}
+
+Wie bereits im Abschnitt \ref{sec:dynamic_programming_unterschiede} erwähnt wurde, wird bei der Value Iteration in jedem Zustand die Aktion mit der größten Belohnung $V^{*}(s) = \underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ bestimmt und so eine schnellere Konvergenz erreicht im Vergleich zur Policy Iteration erreicht.\\
+In diesem Abschnitt wird dieses Verfahren, analog zu der in Abschnitt \ref{sec:anwendung_policy_iteration} beschriebenen Aufgabenstellung, beispielhaft für zwei aufeinander folgenden Iterationen erläutert.
+Die Ausgangssituation und die Ergebnisse sind in Abbildung \ref{fig:value_aufgabe} dargestellt.
+Zum Vergleich wird hier auch der selbe Zustand $s6$ wie bei der Value Iteration betrachtet.\\ 
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/ValueIterationAufgabe}
@@ -422,6 +430,80 @@ Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s
 	\label{fig:value_aufgabe}
 \end{figure}
 
+Zur Berechnung der Aktion mit der größten Belohnung gehen wir von der Formel $\underset{\text{a}}{max} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ aus.
+Man betrachtet dabei in jeder Iteration alle Zustände und pro Zustand werden die direkten Belohnungen für alle Aktionen und die Zustandsbewertungen aus der vorherigen Iteration $V_{k}(s^{'})$.
+Für die erste Iteration und Zustand $s6$ sieht das wie folgt aus:
+
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-1 + 0,8 * 0 & \text{links} \\ 
+		-1 + 0,8 * 0 & \text{oben} \\
+		-2 + 0,8 * 0 & \text{rechts} \\
+		-1 + 0,8 * 0 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-1 & \text{links} \\ 
+		-1 & \text{oben} \\
+		-2 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ link, oben, unten \} = -1
+\end{align}
+
+Im Zustand $s6$ liefern die Aktionen $ links, oben, unten$ die größte direkte Belohnung von $-1$ so dass $V_{k+1}(s) = -1$ ist.
+Für die zweite Iteration wird genau so vorgegangen:
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-1 + 0,8 * -1 & \text{links} \\ 
+		-1 + 0,8 * -1 & \text{oben} \\
+		-2 + 0,8 * -1 & \text{rechts} \\
+		-1 + 0,8 * 0 &  \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-1,8 & \text{links} \\ 
+		-1,8 & \text{oben} \\
+		-2,8 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ unten \} = -1
+\end{align}
+
+In diesem Fall ändert sich an dem für $V_{k+1}(s)$ berechneten Wert nichts, jedoch ist jetzt klar dass im Zustand $s6$ die Aktion $unten$ die optimale Aktion mit der größten Belohnung ist.
+Dieses könnte auch nochmal mit der Formel $\pi(s6) = argmax_{\text{\{links, oben, rechts, unten\}}} \sum_{s^{'}} P^a_{ss^{'}}$ nach der Konvergenz der Zustands-Werte explizit berechnet werden.\\
+Hier zum Vergleich, dass sich bei der Berechnung die Zustands-Werte auch ändern können, die beiden Iteration für den Zustand $s5$:
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-2 + 0,8 * 0 & \text{links} \\ 
+		-2 + 0,8 * 0 & \text{oben} \\
+		-1 + 0,8 * 0 & \text{rechts} \\
+		-1 + 0,8 * 0 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-2 & \text{links} \\ 
+		-2 & \text{oben} \\
+		-1 & \text{rechts} \\
+		-1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ rechts, unten \} = -1
+\end{align}
+
+\begin{align}
+	\underset{\text{a}}{max} = \begin{cases} 
+		-2 + 0,8 * -1 & \text{links} \\ 
+		-2 + 0,8 * -1 & \text{oben} \\
+		-1 + 0,8 * -1 & \text{rechts} \\
+		-1 + 0,8 * -1 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \begin{cases} 
+		-2,8 & \text{links} \\ 
+		-2,8 & \text{oben} \\
+		-1,8 & \text{rechts} \\
+		-1,8 & \text{unten} \\ 
+ 	\end{cases}\\
+ 	\underset{\text{a}}{max} = \{ rechts, unten \} = -1,8
+\end{align}
+
+Im Gegensatz zum Zustand $s6$ hat man im Zustand $s5$ nach zwei Iterationen noch die optimale Aktion mit der größten Belohnung gefunden und es wären noch weitere Iterationen zur Konvergenz nötig. 
 
 \section{Monte Carlo Methoden}
 \label{sec:monteCarloMethoden}
