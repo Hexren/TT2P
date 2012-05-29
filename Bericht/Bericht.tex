@@ -317,9 +317,8 @@ Da beides Verfahren der Dynamischen Programmierung sind, benötigen sie ein voll
 Es müssen also die direkte Belohnung $r$ und der Nachfolgezustand $s_{t+1}$ (welcher durch eine Funktion $s_{t+1} = \delta(s,a)$ bestimmt wird) zur Durchführung der Policy Evaluation Phase (bzw. Berechnung der State-Value-Function $V^{\pi}$) für beiden Verfahren bekannt sein.
 
 \subsubsection{Konzeptionelle Unterschiede}
-Wie bereits erwähnt wird bei der Value Iteration entfällt das wiederholte optimieren der Strategie $\pi$ bis zur Konvergenz der Strategie.
-Warum ist dies aber überhaupt möglich?\\
-\todo{Was bedeutet dieser Satz? CN}
+Wie bereits erwähnt, entfällt bei der Value Iteration das wiederholte Optimieren der Strategie $\pi$ bis diese konvergiert.
+Aber warum kann man dies überhaupt wegfallen lassen?\\
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.5\textwidth]{Bilder/KonvergenzVkPolicy}
@@ -410,11 +409,10 @@ Unterscheiden sich die beiden Policies nicht, so wurde die optimale Strategie ge
 Abschließend ein Beispiel zur Bestimmung der optimalen Aktion für einen Zustand. Zur Aktionsbestimmung wird die Gleichung $\pi(s) = argmax_{a} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]$ benutzt, welche unter allen Aktionen $a$ im Zustand $s$ diejenige Aktion mit dem größten Wert wählt. Hier am Beispiel des Zustands $s6$ nach Iteration 2 durchgeführt:
 \begin{align}
 	\pi(s6) &= argmax_{\text{\{links, oben, rechts, unten\}}} \sum_{s^{'}} P^a_{ss^{'}} [R^a_{ss^{'}} + \gamma V_{k} (s^{'})]\\	
-	\pi(s6) &= argmax \{ -1 + 0,8 * -1,8; -1 + 0,8 * -1,8; -2 + 0,8 * -1; -1 + 0,8 * 0 \}\\
-	\pi(s6) &= argmax \{ -2,44; -2,44; -2,8; -1 \}\\
+	\pi(s6) &= argmax \{ -1 + 0,8 * -2,65; -1 + 0,8 * -2,65; -2 + 0,8 * -2,1; -1 + 0,8 * 0 \}\\
+	\pi(s6) &= argmax \{ -3,12; -3,12; -3,68; -1 \}\\
 	\pi(s6) &= unten
 \end{align}
-\todo{Woher kommen die Werte für $V_{k}(s')$ ? In der Abbildung kann ich die nicht finden. CN}
 
 Am Ergebnis erkennt man dass für den Zustand $s6$ bereits nach der zweiten Iteration die optimale Policy gefunden wurde.
 Diesen Schritt würde man in der Policy Improvement Phase für alle Zustände $s$ durchführen und dann überprüfen ob sich Änderungen gegenüber der vorherigen Policy ergeben haben.
@@ -506,8 +504,8 @@ Hier zum Vergleich, dass sich bei der Berechnung die Zustands-Werte auch ändern
  	\underset{\text{a}}{max} = \{ rechts, unten \} = -1,8
 \end{align}
 
-Im Gegensatz zum Zustand $s6$ hat man im Zustand $s5$ nach zwei Iterationen noch die optimale Aktion mit der größten Belohnung gefunden und es wären noch weitere Iterationen zur Konvergenz nötig.
-\todo{Fehlt hier ein \glqq nicht\grqq\xspace in dem Satz? Ist es in s5 nicht egal ob man recht oder unten lang läuft? CN}
+Auch in für diesen Zustand hat man nach der zweiten Iteration bereits die optimale Strategie gefunden. 
+Im Zustand $s5$ ist es nämlich egal ob man $rechts$ oder nach $unten$ geht,so dass damit die optimalen Aktionen ${rechts, unten}$ sind.
 
 \section{Monte Carlo Methoden}
 \label{sec:monteCarloMethoden}
