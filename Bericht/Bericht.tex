@@ -625,6 +625,8 @@ Markelic Kap 3.4.1).
 
 \subsection{Vergleich der Verfahren}
 \subsubsection{Dynamic Programming}
+Dynamische Programmierung berechnet optimale Strategien auf Basis eines vollständigen Modells der Umgebung. Die Zustände und Zustandsübergänge der Umgebung müssen dabei einen Markov-Entscheidungsprozess darstellen.
+
 \textbf{Voraussetzungen}
 \begin{itemize}
 \item{Die Menge der Umweltzustände ist bekannt und ist endlich}
@@ -633,42 +635,51 @@ Markelic Kap 3.4.1).
 \item{Folgezustände in Abhängigkeit von Ausgangszustand und Aktion bekannt}
 \end{itemize}
 
+\vspace{1em}
 \textbf{Vor- und Nachteile}
 \begin{description}
 \item[$+$] Findet garantiert eine optimale Strategie in polynomialer Zeit
 \item[$+$] Funktioniert bei heutigen Computern mit Millionen von Zuständen
 \item[$-$] Es wird ein vollständiges Modell der Umweltzustände, Aktionen und Belohnungen benötigt
+\item[$-$] Hoher Rechenaufwand
 \item[$-$] Nur für diskrete Zustandsräume verwendbar
+\item[$-$] Sehr empfindlich gegenüber Verletzungen der Markov-Eigenschaft, da neue Schätzungen auf vorherigen Schätzungen basieren (\emph{Bootstrapping})
 \end{description}
 
 \subsubsection{Monte-Carlo-Methoden}
-Monte Carlo Methoden und Temporal Difference Learning betrachten jeweils nur einen Pfad und benötigen kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
+Monte Carlo Methoden betrachten jeweils nur eine Sequenz von Zustandsübergängen (eine \emph{Experience}) und benötigt daher kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? OS}\\
 
 \textbf{Voraussetzungen}
 \begin{itemize}
 \item Die zu lösende Aufgabe ist episodisch
 \end{itemize}
 
+\vspace{1em}
 \textbf{Vor- und Nachteile}
 \begin{description}
 \item[$+$] Kein Modell der Umgebung erforderlich. Stattdessen werden nur Episoden (Sequenzen aus Zuständen, Aktionen und Belohnungen) benötigt, die durch Interaktion mit der Umgebung generiert werden. Diese Episoden können durch einfache Modelle generiert werden, die häufig wesentlich einfacher zu finden sind, als vollständige Modelle der Umwelt mit expliziten Transitionswahrscheinlichkeiten
-\item[$+$] Robuster als DP gegenüber Verletzungen der Markov-Eigenschaft. Dies liegt daran, dass kein Bootstrapping stattfindet
+\item[$+$] Robuster als DP gegenüber Verletzungen der Markov-Eigenschaft. Dies liegt daran, dass neue Schätzungen nicht auf vorherigen Schätzungen basieren (kein \emph{Bootstrapping})
 \item[$+$] Monte-Carlo-Methoden fokussieren sehr gut auf eine kleine Teilmenge der Umweltzustände
+\item[$+$] Garantierte (asymptotische) Konvergenz zur optimalen Strategie
 \item[$-$] Nur für episodische Tasks geeignet, da die Belohnung immer erst am Ende einer Episode generiert wird
 \item[$-$] Ausreichende Exploration ist bei deterministischen Strategien ein Problem, da keine Alternativen Aktionen getestet werden. Dies kann z.B. mit zufälligen Zustands-Aktions-Paaren (sog. \emph{Exploring Starts}) verhindert werden
 \end{description}
 
 \subsubsection{Temporal Difference Learning}
+Temporal Difference Learning vereint Ideen der dynamischen Programmierung und der Monte-Carlo-Methoden. Es verwendet \emph{Bootstrapping} wie Monte-Carlo-Methoden, benötigt jedoch kein Modell der Umwelt wie die dynamische Programmierung.
 
-\textbf{Voraussetzungen}
-\begin{itemize}
-\item Todo
-\end{itemize}
+\textbf{Voraussetzungen} \\
+Keine? \todo{Ich sehe hier keine Vorraussetzungen - jemand von euch? SM}
 
+\vspace{1em}
 \textbf{Vor- und Nachteile}
 \begin{description}
-\item[$+$] Todo
-\item[$-$] Todo
+\item[$+$] Lernen direkt durch Erfahrung, kein Modell der Umwelt mit Zuständen, Zustandsübergängen und Belohnungen notwendig
+\item[$+$] Inkrementell wie dynamische Programmierung: Belohnungen nach jedem Schritt, nicht wie bei Monte-Carlo-Methoden erst nach einer Episode. Dadurch meist schneller, vor allem bei langen Episoden
+\item[$+$] Auch für nicht-episodische Aufgaben geeignet
+\item[$+$] Garantierte (asymptotische) Konvergenz zur optimalen Strategie. Konvergiert erfahrungsgemäß häufig schneller als Monte-Carlo-Methoden (einen formalen Beweis dafür gibt es allerdings nicht)
+\item[$+$] Einfachheit: Wenig Rechenaufwand, es werden nur einzelne Gleichungen benötigt, dadurch kleine Programme
+\item[$-$] Empfindlich gegenüber Verletzungen der Markov-Eigenschaft, da aktuelle Schätzungen auf vorherigen Schätzungen basieren (\emph{Bootstrapping}; Kann durch \emph{Eligibility Traces} behoben werden)
 \end{description}
 
 \listoftodos
