@@ -754,12 +754,14 @@ Für jeden Schritt von einem Zustand in den nächsten wird ein $\delta$ berrechn
 	\caption{Der Sarsa($\lambda$) Pseudocode}
 	\label{fig:SarsaLambda}
 \end{figure}
-\subsection{Vergleich der Verfahren}
+
+\section{Vergleich der Verfahren}
 Drei drei vorher vorgestellten Verfahren dynamische Programmierung, Monte-Carlo-Methoden und Temporal Difference Learning werden in diesem Abschnitt nochmal im Hinblick auf ihre Vor- und Nachteile verglichen.
 
-\subsubsection{Dynamic Programming}
+\subsection{Dynamic Programming}
 Dynamische Programmierung berechnet optimale Strategien auf Basis eines vollständigen Modells der Umgebung. Die Zustände und Zustandsübergänge der Umgebung müssen dabei einen Markov-Entscheidungsprozess darstellen.
 
+\vspace{1em}
 \textbf{Voraussetzungen}
 \begin{itemize}
 \item{Die Menge der Umweltzustände ist bekannt und ist endlich}
@@ -779,9 +781,10 @@ Dynamische Programmierung berechnet optimale Strategien auf Basis eines vollstä
 \item[$-$] Sehr empfindlich gegenüber Verletzungen der Markov-Eigenschaft, da neue Schätzungen auf vorherigen Schätzungen basieren (\emph{Bootstrapping})
 \end{description}
 
-\subsubsection{Monte-Carlo-Methoden}
+\subsection{Monte-Carlo-Methoden}
 Monte Carlo Methoden betrachten jeweils nur eine Sequenz von Zustandsübergängen (eine \emph{Experience}) und benötigt daher kein Modell. \todo{Check: Kein Modell oder ein kleineres ? Wir erstellen doch beim TD eigentlich auch ein Modell, wie ist hier die Abgrenzung ? Wir bauen ja mit unserer Erfahrung eine Map was wir in einem Zustand erwarten. Das klingt nach Modell. Siehe Sutton Page 20 (PDF Page), letzter Absatz OS}\\
 
+\vspace{1em}
 \textbf{Voraussetzungen}
 \begin{itemize}
 \item Die zu lösende Aufgabe ist episodisch
@@ -798,11 +801,12 @@ Monte Carlo Methoden betrachten jeweils nur eine Sequenz von Zustandsübergänge
 \item[$-$] Ausreichende Exploration ist bei deterministischen Strategien ein Problem, da keine alternativen Aktionen getestet werden. Dies kann z.B. durch den Start mit zufälligen Zustands-Aktions-Paaren (sog. \emph{Exploring Starts}) verhindert werden
 \end{description}
 
-\subsubsection{Temporal Difference Learning}
+\subsection{Temporal Difference Learning}
 Temporal Difference Learning vereint Ideen der dynamischen Programmierung und der Monte-Carlo-Methoden. Es verwendet \emph{Bootstrapping} wie Monte-Carlo-Methoden, benötigt jedoch kein Modell der Umwelt wie die dynamische Programmierung.
 
+\vspace{1em}
 \textbf{Voraussetzungen} \\
-Keine? \todo{Ich sehe hier keine Vorraussetzungen - jemand von euch? SM, ich auch nicht. OS}
+Keine besonderen Voraussetzungen wie bei dynamischer Programmierung oder Monte-Carlo-Methoden.
 
 \vspace{1em}
 \textbf{Vor- und Nachteile}
