@@ -112,6 +112,11 @@ class WorldDescription{
 	
 	private int numMatchsticks = 21;
 	private int currentNumMatchsticks;
+	
+	private int gameswon = 0;
+	private int gameslost = 0;
+	private int totalgames = 0;
+	
 
 	private boolean showOutput = true;
 	private boolean playerwins = false;
@@ -202,9 +207,14 @@ class WorldDescription{
 	public int getReward(){
 		
 		if(isTerminal()){	//Spiel ist zu Ende
+			
 			if(playerwins == true){
+				gameswon +=1;
+				totalgames = gameslost + gameswon;
 				return 1;
 			} else {		
+				gameslost +=1;
+				totalgames = gameslost + gameswon;
 				return -1;
 			} 
 		} else {				//Spiel läuft noch
@@ -233,40 +243,9 @@ class WorldDescription{
 //		return (sum > WIN_VALUE && ace) ? sum-10 : sum;
 //	}
 	
-//	public String getStats(){
-//		int averageWinValue = 0;
-//		int averageLooseValue = 0;
-//		int averageDrawnValue = 0;
-//		
-//		int gamesWon = (winValues.size() > 0) ? winValues.size() : 1;
-//		int gamesLost = (looseValues.size()> 0) ? looseValues.size() : 1;
-//		int gamesDrawn = (drawnValues.size()> 0) ? drawnValues.size() : 1;
-//		
-//		int totalGames = gamesWon + gamesLost + gamesDrawn;
-//		
-//		//Mittelwert gewonnen Spiele
-//		int sumWon = 0;
-//		for (Integer win : winValues) {
-//			sumWon += win;
-//		}
-//		averageWinValue = sumWon / gamesWon;
-//		
-//		//Mittelwert verlorene Spiele
-//		int sumLost = 0;
-//		for (Integer loose : looseValues) {
-//			sumLost += loose;
-//		}
-//		averageLooseValue = sumLost / gamesLost;
-//		
-//		//Mittelwert unentschiedene Spiele
-//		int sumDrawn = 0;
-//		for (Integer drawn : drawnValues) {
-//			sumDrawn += drawn;
-//		}
-//		averageDrawnValue = sumDrawn / gamesDrawn;
-//		
-//		return "Totally played Games: " + totalGames + ". Won: " + gamesWon + " (" + averageWinValue +  ")" + " Lost: " + gamesLost + " (" + averageLooseValue +  ")" + " Drawn: " + gamesDrawn + " (" + averageDrawnValue +  ")";
-//	}
+	public String getStats(){
+		return "Totally played Games: " + totalgames + ". Won: " + gameswon + " Lost: " + gameslost;
+	}
 	
 	private void print(String msg){
 		if(showOutput){
