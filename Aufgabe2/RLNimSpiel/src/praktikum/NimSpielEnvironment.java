@@ -55,8 +55,8 @@ public class NimSpielEnvironment implements EnvironmentInterface {
 		} else if(msg.equals("training end")){
 			world.setShowOutput(true);
 			return "Training ended: Output " + world.getShowOutput();
-//		} else if(msg.equals("get stats")){
-//			return world.getStats();
+		} else if(msg.equals("get stats")){
+			return world.getStats();
 		} else {
 			return "Message not understood! You sent: " + msg; 
 		}

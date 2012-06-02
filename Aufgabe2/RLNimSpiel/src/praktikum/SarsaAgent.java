@@ -13,7 +13,7 @@ import org.rlcommunity.rlglue.codec.util.AgentLoader;
 public class SarsaAgent implements AgentInterface {
 
 	private static final String TEAM_NAME ="Team 1";
-	private static final String TEAM_MEMBERS ="Carsten Noetzel";
+	private static final String TEAM_MEMBERS ="Carsten Noetzel, Pascal Jaeger";
 	
 	private boolean showOutput;
 	
@@ -24,7 +24,7 @@ public class SarsaAgent implements AgentInterface {
     private ArrayList<Integer[]> numActions;
     
     private double gamma = 0.0;
-    private double epsilon = 0.1;
+    private double epsilon = 0.5;
     private double alpha = 0.1;
     
     private HashMap<StateActionPair, Double> actionValueFunction;
