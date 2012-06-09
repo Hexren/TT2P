@@ -120,9 +120,9 @@ public class SarsaAgent implements AgentInterface {
 		
 		// Zustandsinformationen dürfen nur durch Integer-Werte beschrieben werden
 		// die Dimensionen sind dabei frei wählbar
-		assert (observation.getNumInts()>=1);		
-		assert (observation.getNumDoubles()==0);	
-		assert (observation.getNumChars()==0);	
+		assert (observation.getNumInts()>=1);
+		assert (observation.getNumDoubles()==0);
+		assert (observation.getNumChars()==0);
 		
 		// Zustand für aktuelle Beobachtung erstellen
 		ArrayList<Integer> actualObservation = new ArrayList<Integer>();
@@ -291,51 +291,4 @@ public class SarsaAgent implements AgentInterface {
     	return permutations;
     }
 
-}
-
-class StateActionPair{
-	
-	private ArrayList<Integer> state;
-	private ArrayList<Integer> action;
-	
-	public StateActionPair(ArrayList<Integer> state, ArrayList<Integer> action){
-		this.state = state;
-		this.action = action;
-	}
-	
-	public ArrayList<Integer> getState(){
-		return state;
-	}	
-	
-	public ArrayList<Integer> getAction(){
-		return action;
-	}
-	
-	@Override
-	public String toString(){
-		return "States: " + state.toString() + " Actions:" + action.toString();
-	}
-	
-	@Override
-	public boolean equals(Object obj){
-		if(this == obj) return true;
-
-		if(!(obj instanceof StateActionPair)) return false;
-		
-		StateActionPair check = (StateActionPair)obj;
-		
-		//State Action Pairs sind gleich, wenn beide Listen gleich sind
-		return state.equals(check.getState()) && action.equals(check.getAction());
-		
-	}
-	
-	@Override
-	public int hashCode() {
-		int result = 17;
-		result += 31 * state.hashCode();
-		result += 31 * action.hashCode();
-		return result;
-	}
-	
-	
 }
