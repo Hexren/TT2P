@@ -23,7 +23,7 @@
 \usepackage{listings}
 \usepackage{epstopdf}
 \usepackage{amsmath}
-\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black,disable]{todonotes}
+\usepackage[colorinlistoftodos,textsize=small,textwidth=2cm,shadow,bordercolor=black,backgroundcolor={red!100!green!33},linecolor=black]{todonotes}%disable
 \usepackage{nameref}
 \usepackage{titleref}
  
@@ -122,6 +122,10 @@ Unhabhängig davon, welche Aktion die $\epsilon$-Greedy Policy wählt, wird imme
 Das Verhalten vom Sarsa-Algorithmus nähert sich dem vom Q-Learning an, da mit kleiner werdendem $\epsilon$ die Wahrscheinlichkeit sinkt eine zufällige Aktion auszuwählen. Bei sehr kleinem $\epsilon$ wird vermehrt die Aktion $a'$ ausgewählt, die den größten Reward verspricht, ähnlich wie es beim Q-Learning mit $max_{a} Q(s_{t+1},a)$ getan wird. Damit nährt sich das Verhalten von Sarsa dem des Q-Learnings an.
 
 \section{Fragestellung 3: kontinuierliche Zustandsvariablen}
+Partitionierung/Decomposing\\
+states verwerfen
+\todo{machine learning state space too big decomposition}
+
 
 \section{Fragestellung 4: Kniffel}
 
