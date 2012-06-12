@@ -1,21 +1,21 @@
 package praktikum;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StateActionPair {
-	private ArrayList<Integer> state;
-	private ArrayList<Integer> action;
+	private List<Integer> state;
+	private List<Integer> action;
 	
-	public StateActionPair(ArrayList<Integer> state, ArrayList<Integer> action){
+	public StateActionPair(List<Integer> state, List<Integer> action){
 		this.state = state;
 		this.action = action;
 	}
 	
-	public ArrayList<Integer> getState(){
+	public List<Integer> getState(){
 		return state;
 	}	
 	
-	public ArrayList<Integer> getAction(){
+	public List<Integer> getAction(){
 		return action;
 	}
 	
