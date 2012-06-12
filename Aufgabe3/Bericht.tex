@@ -127,17 +127,18 @@ Unhabhängig davon, welche Aktion die $\epsilon$-Greedy Policy wählt, wird imme
 Das Verhalten vom Sarsa-Algorithmus nähert sich dem vom Q-Learning an, da mit kleiner werdendem $\epsilon$ die Wahrscheinlichkeit sinkt eine zufällige Aktion auszuwählen. Bei sehr kleinem $\epsilon$ wird vermehrt die Aktion $a'$ ausgewählt, die den größten Reward verspricht, ähnlich wie es beim Q-Learning mit $max_{a} Q(s_{t+1},a)$ getan wird. Damit nährt sich das Verhalten von Sarsa dem des Q-Learnings an.
 
 \section{Fragestellung 3: kontinuierliche Zustandsvariablen}
-Für den Fall, dass die Zustandsvariablen kontinuierlich sind werden sie diskretisiert. Sollte der Zustandsraum durch die Diskretisierung zu groß werden, findet entweder eine Partitionierung des Zustandsraumes oder eine Abstraktion von Zuständen statt. Das heißt ein großer Zustandsraum kann in mehrere kleine Räume aufgeteilt werden, oder es wird über die Zustände selbst abstrahiert, d.h. mehrere Zustände werden zu einem zusammengefasst.
+Für den Fall, dass die Zustandsvariablen kontinuierlich sind werden sie diskretisiert. Sollte der Zustandsraum durch die Diskretisierung zu groß werden, gibt es verschiedene Möglichkeiten, um den Zustandsraum zu verkleinern bzw. handhabbar zu machen.
+\subsection{Partitionierung}
+Bei der Partitionierung wird ein großer Zustandsraum in mehrere kleine Räume aufgeteilt. Ein Beispiel für die Partitionierung des Zustandsraumes ist Schach, bei dem der Zustandsraum in Eröffnung, Mittel- und Endspiel unterteilt werden kann. 
 
-Ein Beispiel für die Partitionierung des Zustandsraumes ist Schach, bei dem der Zustandsraum in Eröffnung, Mittel- und Endspiel unterteilt werden kann. Ein Beispiel für die Abstraktion ist Kniffel, in dem bspw. die Sortierung der Würfel ignoriert wird um den Zustandsraum zu verkleinern. In diesem Fall werden dadurch nicht einmal Informationen verloren.
+\subsection{Abstraktion}
+Ein Beispiel für die Abstraktion ist Kniffel, in dem bspw. die Reihenfolge in der die Würfel geworfen wurden ignoriert wird und sie immer der Größe nach sortiert werden, um den Zustandsraum zu verkleinern. In diesem Fall werden dadurch nicht einmal Informationen verloren.
 
-\subsection{Generalisierung durch überwachte Lernverfahren}
-
+\subsection{Neuronale Netze}
 \todo{Nachfolgendes stammt aus dem Ertel}
-Dadurch, dass es endlos viele Zustände gibt, wird auch die Tabelle gespeicherter Q- oder V-Werte unendlich groß. Hier gibt es die Möglichkeit, Methoden des überwachten Lernens zu verwenden, um die Werte zu generalisieren. Die Tabelle kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
+Die Tabelle der Q der V Werte kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
 Statt eines neuronalen Netzes ist es auch möglich, andere überwachte Lernverfahren, wie beispielsweise Support Vector Machines zu verwenden, um den unendlichen Zustandsraum zu generalisieren und somit zu begrenzen.
 
-Es kann aber Probleme geben, da der Q-Wert eigentlich erst nach unendlich vielen Besuchen der Zustands-Aktions-Paare zu seinem optimalen Wert konvergiert. Ein unendlich häufiger Besuch ist hier nicht mehr möglich, dementsprechend ist auch die Konvergenz nicht mehr garantiert gegeben.
 
 
 \section{Fragestellung 4: Kniffel}
