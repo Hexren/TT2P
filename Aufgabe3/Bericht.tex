@@ -52,7 +52,7 @@
 %changehere
 \def\titletext{TT2 Problemstellung 3 : Ausarbeitung}
 \def\titletextshort{Problemstellung 3}
-\author{Pascal Jäger, Stefan Münchow, Armin Steudte,\\ Milena Rötting, Sven-Andjes Pahl, Carsten Noetzel, Oliver Steenbuck}
+\author{Pascal Jäger, Stefan Münchow, Armin Steudte,\\ Milena Rötting, Svend-Anjes Pahl, Carsten Noetzel, Oliver Steenbuck}
 
 \title{\titletext}
 
@@ -64,7 +64,7 @@
 \ihead{TT2, Neitzke}
 \ifoot{Generiert am:\\ \today}
 
-\cfoot{Pascal Jäger, Stefan Münchow,\\ Armin Steudte, Milena Rötting,\\ Sven-Andjes Pahl, Carsten Noetzel, Oliver Steenbuck}
+\cfoot{Pascal Jäger, Stefan Münchow,\\ Armin Steudte, Milena Rötting,\\ Svend-Anjes Pahl, Carsten Noetzel, Oliver Steenbuck}
 
 
 \ohead[]{\titletextshort}
@@ -82,6 +82,11 @@
 %\lstlistoflistings
 
 \section{Fragestellung 1: V-Werte / Q-Werte}
+Die Value-Function $V(s)$ definiert die mittlere Belohnung, wenn man einer Strategie $\pi$ ab dem Zustand $s$ folgt. Um die mittlere Belohnung zu bestimmen, ist es notwendig entweder eine Stategie $\pi$ vorgegeben zu haben, welche bewertet werden soll (Policy Evaluation), oder es muss das Modell der Umwelt, das heißt die Zustandsübergangsfunktion $\delta$ und die Belohnungsfunktion $r$, bekannt sein. Ist das Modell der Umwelt bekannt, so kann mit Hilfe von beispielsweise der Value-Iteration die optimale Strategie $\pi^*$ ermittelt werden (Policy Improvement).
+
+Möchte man eine Strategie verbessern und besitzt kein Modell der Umwelt, so reicht die Bewertung einzelner Zustände nicht aus. Die Zustandsbewertung gibt keine Auskunft darüber die Wahl welcher Aktion zur Zustandsbewertung geführt hat. Man besitzt zwar die aktuelle Strategie $\pi$, diese wird jedoch kontinuierlich verbessert und damit ist kein Rückschluss einer Aktion auf eine Zustandsbewertung mehr möglich. (Wieso geht das bei Modell der Umwelt?)
+
+Aus diesem Grund wird nicht nur die Bewertung des Zustands für die aktuelle Aktion der Strategie gespeichert, sondern es wird die Bewertung jeder Aktion für einen Zustand in einer Action-State-Funktion gespeichert. Auf diese Weise ist es möglich, die Strategie $\pi$ zu verändern und das Wissen über die Bewertung einzelner Aktionen zu behalten. Durch die Speicherung der Bewertung zu jeder einzelnen Aktion vervielfacht sich der Speicheraufwand erheblich.
 
 \section{Fragestellung 2: SARSA / Q-Learning bei kleinem $\epsilon$}
 \subsection{On-Policy: SARSA}
@@ -122,17 +127,18 @@ Unhabhängig davon, welche Aktion die $\epsilon$-Greedy Policy wählt, wird imme
 Das Verhalten vom Sarsa-Algorithmus nähert sich dem vom Q-Learning an, da mit kleiner werdendem $\epsilon$ die Wahrscheinlichkeit sinkt eine zufällige Aktion auszuwählen. Bei sehr kleinem $\epsilon$ wird vermehrt die Aktion $a'$ ausgewählt, die den größten Reward verspricht, ähnlich wie es beim Q-Learning mit $max_{a} Q(s_{t+1},a)$ getan wird. Damit nährt sich das Verhalten von Sarsa dem des Q-Learnings an.
 
 \section{Fragestellung 3: kontinuierliche Zustandsvariablen}
-Für den Fall, dass die Zustandsvariablen kontinuierlich sind werden sie diskretisiert. Sollte der Zustandsraum durch die Diskretisierung zu groß werden, findet entweder eine Partitionierung des Zustandsraumes oder eine Abstraktion von Zuständen statt. Das heißt ein großer Zustandsraum kann in mehrere kleine Räume aufgeteilt werden, oder es wird über die Zustände selbst abstrahiert, d.h. mehrere Zustände werden zu einem zusammengefasst.
+Für den Fall, dass die Zustandsvariablen kontinuierlich sind werden sie diskretisiert. Sollte der Zustandsraum durch die Diskretisierung zu groß werden, gibt es verschiedene Möglichkeiten, um den Zustandsraum zu verkleinern bzw. handhabbar zu machen.
+\subsection{Partitionierung}
+Bei der Partitionierung wird ein großer Zustandsraum in mehrere kleine Räume aufgeteilt. Ein Beispiel für die Partitionierung des Zustandsraumes ist Schach, bei dem der Zustandsraum in Eröffnung, Mittel- und Endspiel unterteilt werden kann. 
 
-Ein Beispiel für die Partitionierung des Zustandsraumes ist Schach, bei dem der Zustandsraum in Eröffnung, Mittel- und Endspiel unterteilt werden kann. Ein Beispiel für die Abstraktion ist Kniffel, in dem bspw. die Sortierung der Würfel ignoriert wird um den Zustandsraum zu verkleinern. In diesem Fall werden dadurch nicht einmal Informationen verloren.
+\subsection{Abstraktion}
+Ein Beispiel für die Abstraktion ist Kniffel, in dem bspw. die Reihenfolge in der die Würfel geworfen wurden ignoriert wird und sie immer der Größe nach sortiert werden, um den Zustandsraum zu verkleinern. In diesem Fall werden dadurch nicht einmal Informationen verloren.
 
-\subsection{Generalisierung durch überwachte Lernverfahren}
-
+\subsection{Neuronale Netze}
 \todo{Nachfolgendes stammt aus dem Ertel}
-Dadurch, dass es endlos viele Zustände gibt, wird auch die Tabelle gespeicherter Q- oder V-Werte unendlich groß. Hier gibt es die Möglichkeit, Methoden des überwachten Lernens zu verwenden, um die Werte zu generalisieren. Die Tabelle kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
+Die Tabelle der Q der V Werte kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
 Statt eines neuronalen Netzes ist es auch möglich, andere überwachte Lernverfahren, wie beispielsweise Support Vector Machines zu verwenden, um den unendlichen Zustandsraum zu generalisieren und somit zu begrenzen.
 
-Es kann aber Probleme geben, da der Q-Wert eigentlich erst nach unendlich vielen Besuchen der Zustands-Aktions-Paare zu seinem optimalen Wert konvergiert. Ein unendlich häufiger Besuch ist hier nicht mehr möglich, dementsprechend ist auch die Konvergenz nicht mehr garantiert gegeben.
 
 
 \section{Fragestellung 4: Kniffel}
