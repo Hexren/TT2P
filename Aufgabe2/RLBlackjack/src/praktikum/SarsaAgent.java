@@ -11,9 +11,8 @@ import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
 
 public class SarsaAgent implements AgentInterface {
-
 	private static final String TEAM_NAME ="Team 1";
-	private static final String TEAM_MEMBERS ="Carsten Noetzel";
+	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow, Milena Roetting, Armin Steudte, Carsten Noetzel";
 	
 	private boolean showOutput;
 	
@@ -42,7 +41,7 @@ public class SarsaAgent implements AgentInterface {
 		// alles löschen
         lastAction = null;
         lastObservation = null;
-        //actionValueFunction = null; 	//darf nicht gelöscht werden, sonst gehen die Ergbnisse der einzelnen Episoden verloren
+        actionValueFunction = null;
 	}
 
 	@Override
@@ -63,7 +62,6 @@ public class SarsaAgent implements AgentInterface {
 	@Override
 	public void agent_init(String taskSpecification) {
 		// Diese Methode initialisiert den Agenten 
-		
 		// übergebenen String in TaskSpecification umwandeln
 		TaskSpec taskSpec = new TaskSpec(taskSpecification);
 		
@@ -198,6 +196,7 @@ public class SarsaAgent implements AgentInterface {
 		// Zufallszahl generieren und prüfen ob zufällig eine andere
 		// Aktion ausgewählt wird als die optimale
 		if(randGenerator.nextDouble() <= epsilon){
+			print("Choosing random action");
 			for (int i = 0; i < numActions.size(); i++) {
 				minValue = numActions.get(i)[0];											//untere Grenze der Dimension bestimmen
 				maxValue = numActions.get(i)[1];											//obere Grenze der Dimension bestimmen
@@ -206,6 +205,7 @@ public class SarsaAgent implements AgentInterface {
 			}
 			return chosenActions;
 		} else {
+			print("Choosing action with max estimated return");
 			ArrayList<Integer> minValues = new ArrayList<Integer>();
 			ArrayList<Integer> maxValues = new ArrayList<Integer>();
 			for (int i = 0; i < numActions.size(); i++) {

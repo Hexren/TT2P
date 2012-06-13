@@ -8,10 +8,11 @@ import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.util.AgentLoader;
 
 public class QLearningAgent implements AgentInterface {
 	private static final String TEAM_NAME ="Team 1";
-	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow";
+	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow, Milena Roetting, Armin Steudte, Carsten Noetzel";
 	
 	private boolean showOutput;
 	
@@ -28,6 +29,9 @@ public class QLearningAgent implements AgentInterface {
     private HashMap<StateActionPair, Double> actionValueFunction;
     
     public QLearningAgent() {
+		super();
+		
+		showOutput = false;
 		// Action-Value-Function initialisieren n-dimensionales Array Q(s,a)
 		actionValueFunction = new HashMap<StateActionPair, Double>(); 
 	}
@@ -37,6 +41,7 @@ public class QLearningAgent implements AgentInterface {
 		// alles löschen
         lastAction = null;
         lastObservation = null;
+        actionValueFunction = null;
 	}
 
 	@Override
@@ -126,8 +131,7 @@ public class QLearningAgent implements AgentInterface {
 		returnAction.intArray= actions;
 		
 		lastAction = actualAction;					//aktuelle Aktion sichern
-		lastObservation.clear();
-		lastObservation.addAll(actualObservation); 	//aktuelle Beobachtung sichern
+		saveObservation(actualObservation); 		//aktuelle Beobachtung sichern
 		
 		return returnAction;
 	}
@@ -170,8 +174,7 @@ public class QLearningAgent implements AgentInterface {
 		returnAction.intArray= actions;
 		
 		lastAction = actualAction;					//aktuelle Aktion sichern
-		lastObservation.clear();
-		lastObservation.addAll(actualObservation); 	//aktuelle Beobachtung sichern
+		saveObservation(actualObservation); 		//aktuelle Beobachtung sichern
 		
 		return returnAction;
 	}
@@ -180,4 +183,16 @@ public class QLearningAgent implements AgentInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public static void main(String[] args) {
+        AgentLoader theLoader = new AgentLoader(new QLearningAgent());
+        theLoader.run();
+	}
+	
+	private void saveObservation(ArrayList<Integer> observation){
+		lastObservation = new ArrayList<Integer>();
+		for (Integer integer : observation) {
+			lastObservation.add(integer);
+		}
+    }
 }

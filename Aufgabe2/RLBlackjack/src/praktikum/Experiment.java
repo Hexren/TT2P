@@ -21,10 +21,10 @@ public class Experiment {
 		
 		trainingTimer.start();
 		
+		RLGlue.RL_init();		//Enviroment und Agent initialisieren
+		
 		while(!timeIsOver){
-			RLGlue.RL_init();		//Enviroment und Agent initialisieren
 			RLGlue.RL_episode(0);	//Episode vom Start bis zum Endzustand durchspielen
-			RLGlue.RL_cleanup();	//aufräumen
 		}
 		
 		print("Agent: " + RLGlue.RL_agent_message("training end"));
@@ -38,15 +38,10 @@ public class Experiment {
 		print("Agent: \n" + ag_status);
 		
 		//jetzt kommt das entscheidende Spiel mit Output
-		RLGlue.RL_init();		//Enviroment und Agent initialisieren
 		RLGlue.RL_episode(0);	//Episode vom Start bis zum Endzustand durchspielen
 
 		print("Experiment ended!");
-		RLGlue.RL_cleanup();
-		
-		while(true){
-			
-		}
+		RLGlue.RL_cleanup();	//aufräumen
 	} 
 	
 	private void print(String msg){

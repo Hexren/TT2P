@@ -17,7 +17,7 @@ import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 public class BlackJackEnvironment implements EnvironmentInterface {
 
 	private static final String TEAM_NAME ="Team 1";
-	private static final String TEAM_MEMBERS ="Carsten Noetzel";
+	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow, Milena Roetting, Armin Steudte, Carsten Noetzel";
 	
 	private static TableDescription table;
 	
@@ -27,10 +27,6 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 
 	@Override
 	public String env_init() {
-		// Diese Methode initialisiert das Enviroment, in disem Fall den 
-		// Spieltisch an dem BlackJack gespielt wird
-		table.initTable();
-		
 		// Erstellen der TaskSpezifikation
 		TaskSpecVRLGLUE3 taskSpec = new TaskSpecVRLGLUE3();
 		taskSpec.setEpisodic(); 														//episodisches Enviroment
@@ -70,10 +66,11 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 
 	@Override
 	public Observation env_start() {
-		// Diese Methode startet eine neue Episode, dazu müssen zunächst die Karten gemischt werden
+		// Diese Methode startet eine neue Episode, dazu mussen zunächst ein Tisch erstellt, die Karten gemischt werden
 		// und dem Dealer sowie dem Spieler je zwei Karten hingelegt werden, wovon eine Karte des Dealers
 		// umgedreht wird
 		
+		table.initTable();
 		table.shuffleCards();
 		table.dealCards();
 		
