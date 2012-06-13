@@ -9,10 +9,11 @@ import org.rlcommunity.rlglue.codec.AgentInterface;
 import org.rlcommunity.rlglue.codec.taskspec.TaskSpec;
 import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
+import org.rlcommunity.rlglue.codec.util.AgentLoader;
 
 public class QLearningAgent implements AgentInterface {
 	private static final String TEAM_NAME ="Team 1";
-	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow";
+	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Münchow, Milena Roetting, Armin Steudte, Carsten Noetzel";
 	
 	private boolean showOutput;
 	
@@ -29,6 +30,9 @@ public class QLearningAgent implements AgentInterface {
     private HashMap<StateActionPair, Double> qFunction;
     
     public QLearningAgent() {
+		super();
+		
+		showOutput = false;
 		// Action-Value-Function initialisieren n-dimensionales Array Q(s,a)
 		qFunction = new HashMap<StateActionPair, Double>(); 
 	}
@@ -135,7 +139,7 @@ public class QLearningAgent implements AgentInterface {
 			actions[i] = a_next.get(i);
 		}
 		returnAction.intArray= actions;
-		
+
 		return returnAction;
 	}
 	
@@ -244,10 +248,10 @@ public class QLearningAgent implements AgentInterface {
 			return TEAM_MEMBERS;
 		} else if(msg.equals("training start")) {
 			showOutput = false;
-			return "Start training: Output " + showOutput;
+			return "QLearningAgent Start training: Output " + showOutput;
 		} else if(msg.equals("training end")) {
 			showOutput = true;
-			return "Training ended: Output " + showOutput;
+			return "QLearningAgent Training ended: Output " + showOutput;
 		} else if(msg.equals("get stats")) {
 			StringBuilder sb = new StringBuilder();
 			for (StateActionPair saPair : qFunction.keySet()) {
@@ -260,5 +264,10 @@ public class QLearningAgent implements AgentInterface {
 		} else {
 			return "Message not understood! You sent: " + msg; 
 		}
+	}
+	
+	public static void main(String[] args) {
+        AgentLoader theLoader = new AgentLoader(new QLearningAgent());
+        theLoader.run();
 	}
 }
