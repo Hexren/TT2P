@@ -22,7 +22,7 @@ import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
  */
 public class VierGewinntEnvironment implements EnvironmentInterface {
 	private static final String TEAM_NAME = "Team 1";
-	private static final String TEAM_MEMBERS = "Pascal Jager, Stefan Münchow, Armin Steudte, Milena Rötting, Sven-Andjes Pahl, Carsten Noetzel, Oliver Steenbuck";
+	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Muenchow, Milena Roetting, Armin Steudte, Carsten Noetzel, Pascal Jaeger";
 
 	private VierGewinntDescription game;
 

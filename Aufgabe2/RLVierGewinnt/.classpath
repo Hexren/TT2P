@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="C:/Tools/java-codec-dev-2.07/java-codec-dev/products/JavaRLGlueCodec.jar" sourcepath="C:/Tools/java-codec-dev-2.07/java-codec-dev/src"/>
+	<classpathentry kind="lib" path="C:/Users/Milena/Documents/Dropbox/Uni Privat/TT2/Git/TT2P/Aufgabe2/RLVierGewinnt/lib/JavaRLGlueCodec.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
