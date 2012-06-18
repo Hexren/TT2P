@@ -108,26 +108,32 @@ Die \textbf{Umgebung} ist im Allgemeinen \textbf{nicht deterministisch} (die gle
 \subsection{Policy - Strategie}
 Welche Aktion abhängig vom Zustand wählen?
 
+\subsubsection{deterministische Strategie}
+Die deterministische Strategie mappt Zustände direkt auf Aktionen $\pi: S \rightarrow A$, wobei $S$ die Menge der Zustände und $A$ die Menge der Aktionen ist, mit $A(s)$ als mögliche Aktionen im Zustand $s$. (siehe Reflex Agent)
+
 \subsubsection{stochastische Strategie}
 Für einen Zeitpunkt t gibt es eine Wahrscheinlichkeit $\pi_{t}(s,a)$ dafür, dass a die gewählte Aktion $a_{t}$ sein wird falls $s$ der aktuell vorliegende Zustand $s_{t}$ sein sollte. Ziel des Agenten ist es seine Belohnungen über die Gesamtlaufzeit zu maximieren, also die optimale Strategie $\pi^{*}$ zu lernen.
 
-\subsubsection{deterministische Strategie}
-Die deterministische Strategie mappt Zustände direkt auf Aktionen $\pi: S \rightarrow A$, wobei $S$ die Menge der Zustände und $A$ die Menge der Aktionen ist, mit $A(s)$ als mögliche Aktionen im Zustand $s$. (siehe Reflex Agent)
+Die einfachste Zufallsstrategie ist $\pi(s, a) = \frac{1}{|A(s)|}$. Hier hat jede Aktion in einem Zustand die selbe Wahrscheinlichkeit.
+
+\subsubsection{$\varepsilon$-soft}
+Eine Strategie ist \emph{soft}, wenn die Wahrscheinlichkeit für jede Aktion in einem Zustand größer Null ist, also $\pi(s, a) > 0$ für alle $s \in S$ und $a \in A(s)$.
+
+Eine $\varepsilon$-soft Strategie ist eine softe Strategie, bei der jede Aktion ein Wahrscheinlichkeit von mindestens $\frac{\varepsilon}{|A(s)|}$ mit einem beliebigen $\varepsilon > 0$ besitzt. Es gilt also $\pi(s, a) \ge \frac{\varepsilon}{|A(s)|}$ für alle $s \in S$ und alle $a \in A(s)$. Die Wahrscheinlichkeiten für die verschiedenen Aktionen in einem Zustand können also beliebig verteilt sein, solange sie mindestens $\frac{\varepsilon}{|A(s)|}$ betragen.
 
 \subsubsection{$\varepsilon$-greedy}
 Meistens wird die Aktion mit dem höchsten erwarteten Reward gewählt (greediest action), mit einer Wahrscheinlichkeit $\varepsilon$ jedoch zufällig eine andere (unabhängig vom erwarteten Reward).
 
-Wahrscheinlichkeitsvektor über die möglichen Aktionen in einem Zustand: $\vec x = (x_1, x_2, x_3, ..., x_n)$ mit $n$ als der Anzahl möglicher Aktionen und $x_i$ der Wahrscheinlichkeit, Aktion $i$ zu wählen.
+Es gibt einen Wahrscheinlichkeitsvektor $\vec x = (x_1, x_2, x_3, ..., x_n)$ über die möglichen Aktionen in einem Zustand mit $n = |A(s)|$ als der Anzahl möglicher Aktionen und $x_i$ der Wahrscheinlichkeit, Aktion $i$ zu wählen.
 
 \[
 x_i=\begin{cases}
-  (1-\varepsilon) + (\varepsilon/n),  & \text{wenn }Q\text{ von }i\text{ am höchsten in }\vec x\text{ ist.}\\
-  \varepsilon/n, & \text{sonst.}
+  (1-\varepsilon) + \frac{\varepsilon}{n}, & \text{wenn }Q\text{ von }i\text{ am höchsten in }\vec x\text{ ist.}\\
+  \frac{\varepsilon}{n}, & \text{sonst.}
 \end{cases}
 \]
 
-\subsubsection{$\varepsilon$-soft}
-Meistens wird die Aktion mit dem höchsten erwarteten Reward gewählt, mit einer Wahrscheinlichkeit $1-\varepsilon$ jedoch zufällig eine andere (unabhängig vom erwarteten Reward).
+$\varepsilon$-greedy ist also ein Spezialfall von $\varepsilon$-soft, bei dem alle Aktionen außer der am besten bewertete Aktion eine Wahrscheinlichkeit von $\frac{\varepsilon}{n}$ besitzen und die am besten bewertete Aktion eine Wahrscheinlichkeit von $1 - \varepsilon + \frac{\varepsilon}{n}$.
 
 \subsubsection{softmax}
 Jede Aktion wird anhand ihres zu erwarteten Rewards gewichtet. Es wird zufällig eine Aktion ausgewählt, allerdings mit Betrachtung des Gewichts, sodass die Aktion, die den schlechtesten Reward bringt auch am seltensten gewählt wird. 
