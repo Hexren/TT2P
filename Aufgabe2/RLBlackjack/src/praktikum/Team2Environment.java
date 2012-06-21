@@ -14,9 +14,9 @@ import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.types.Reward_observation_terminal;
 import org.rlcommunity.rlglue.codec.util.EnvironmentLoader;
 
-public class BlackJackEnvironment implements EnvironmentInterface {
+public class Team2Environment implements EnvironmentInterface {
 
-	private static final String TEAM_NAME ="Team 1";
+	private static final String TEAM_NAME ="Team 2";
 	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Muenchow, Milena Roetting, Armin Steudte, Carsten Noetzel, Pascal Jaeger";
 
 	private static TableDescription table;
@@ -27,6 +27,8 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 
 	@Override
 	public String env_init() {
+		table = new TableDescription();
+		
 		// Erstellen der TaskSpezifikation
 		TaskSpecVRLGLUE3 taskSpec = new TaskSpecVRLGLUE3();
 		taskSpec.setEpisodic(); 														//episodisches Enviroment
@@ -69,7 +71,6 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 		// Diese Methode startet eine neue Episode, dazu mussen zunächst ein Tisch erstellt, die Karten gemischt werden
 		// und dem Dealer sowie dem Spieler je zwei Karten hingelegt werden, wovon eine Karte des Dealers
 		// umgedreht wird
-
 		table.initTable();
 		table.shuffleCards();
 		table.dealCards();
@@ -113,8 +114,7 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 
 	// Starten des Enviroments
 	public static void main(String[] args) {
-		table = new TableDescription();
-		EnvironmentLoader envLoader = new EnvironmentLoader(new BlackJackEnvironment());
+		EnvironmentLoader envLoader = new EnvironmentLoader(new Team2Environment());
 		envLoader.run();
 	}
 
@@ -124,7 +124,7 @@ public class BlackJackEnvironment implements EnvironmentInterface {
 class TableDescription{
 
 	private static final int WIN_VALUE = 21;
-	private boolean showOutput = true;
+	private boolean showOutput = false;
 
 	Stack<Card> carddeck;
 
