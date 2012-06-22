@@ -10,8 +10,8 @@ import org.rlcommunity.rlglue.codec.types.Action;
 import org.rlcommunity.rlglue.codec.types.Observation;
 import org.rlcommunity.rlglue.codec.util.AgentLoader;
 
-public class SarsaAgent implements AgentInterface {
-	private static final String TEAM_NAME ="Team 1";
+public class Team2Agent implements AgentInterface {
+	private static final String TEAM_NAME ="Team 2";
 	private static final String TEAM_MEMBERS ="Oliver Steenbuck, Svend-Anjes Pahl, Stefan Muenchow, Milena Roetting, Armin Steudte, Carsten Noetzel, Pascal Jaeger";
 
 	private boolean showOutput;
@@ -28,7 +28,7 @@ public class SarsaAgent implements AgentInterface {
 
 	private HashMap<StateActionPair, Double> actionValueFunction;
 
-	public SarsaAgent(){
+	public Team2Agent(){
 		super();
 
 		showOutput = false;
@@ -234,7 +234,7 @@ public class SarsaAgent implements AgentInterface {
 	}
 
 	public static void main(String[] args) {
-		AgentLoader theLoader = new AgentLoader(new SarsaAgent());
+		AgentLoader theLoader = new AgentLoader(new Team2Agent());
 		theLoader.run();
 
 		//    	SarsaAgent x = new SarsaAgent();
