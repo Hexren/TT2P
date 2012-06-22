@@ -552,15 +552,15 @@ Verfahren aus der Stochastik in dem sehr häufig durchgeführte Zufallsexperimen
 
 \subsection{Policy Evaluation}
 \subsubsection{Schätzung der State-Values $V^{\pi}(s)$}
-Wie in den Abschnitten zuvor bereits erwähnt, ist der Wert eines Zustandes, der erwartete zukünftige kumulierte discounted reward, ausgehend vom betrachteten Zustand. Eine Möglichkeit diesen Wert aus Erfahrungen zu schätzen, ist es die erhaltenen Belohnungen zu mitteln, nachdem der Zustand besucht wurde. Je mehr Belohnungen für diesen Zustand beobachtet werden, desto näher sollte das Mittel zum erwarteten Wert konvergieren. Diese Idee verfolgen alle Monte Carlo Methoden.\\
+Wie in den Abschnitten zuvor bereits erwähnt, ist der Wert eines Zustandes, der erwartete zukünftige kumulierte abgeschwächte Return, ausgehend vom betrachteten Zustand. Eine Möglichkeit diesen Wert aus Erfahrungen zu schätzen, ist es die erhaltenen Returns zu mitteln, nachdem der Zustand besucht wurde. Je mehr Returns für diesen Zustand beobachtet werden, desto näher sollte das Mittel zum erwarteten Wert konvergieren. Diese Idee verfolgen alle Monte Carlo Methoden.\\
 Beide Verfahren First- und Every-visit MC konvergieren nach $V^{\pi}(s)$, wenn die Anzahl der Besuche ins unendliche geht (Gesetz der großen Zahlen).
 
 \subsubsection{Every-visit Monte Carlo}
-Die Every-visit MC Methode schätzt man $V^{\pi}(s)$ über die Mittelwertbildung aller Belohnungen, die bei \textbf{jedem Besuch} vom Zustand $s$ in einer Episode erhalten werden.
+Die Every-visit MC Methode schätzt man $V^{\pi}(s)$ über die Mittelwertbildung aller erzielten Returns, die \textbf{jedem Besuch} vom Zustand $s$ in einer Episode folgen.
 
 \subsubsection{First-visit Monte Carlo}
 Innerhalb einer Episode wird der \textbf{erste Besuch} von $s$ als First-visit bezeichnet und die First-visit MC Methode bildet den Mittelwert nur über die ersten Besuche von $s$ innerhalb einer Episode.\\
-Der Algorithmus wird in Abbildung \ref{fig:FirstVisit} dargestellt. Es wird eine Episode für die Strategie $\pi$ ausgeführt und für jeden Zustand $s$ der Episode wird die Belohnung $R$ festgehalten, die dem ersten Besuch von $s$ folgt. $R$ wird anschließend zu den aus vorherigen Episoden erhaltenen Rewards $Returns(s)$ addiert, woraufhin die Rewards gemittelt und $V^{\pi}(s)$ zugewiesen werden.
+Der Algorithmus wird in Abbildung \ref{fig:FirstVisit} dargestellt. Es wird eine Episode für die Strategie $\pi$ ausgeführt und für jeden Zustand $s$ der Episode wird der am Ende der Episode erzielte Return $R$ festgehalten, der dem ersten Besuch von $s$ folgt. $R$ wird anschließend zu den aus vorherigen Episoden erhaltenen Returns $Returns(s)$ hinzugefügt, woraufhin die Returns gemittelt und $V^{\pi}(s)$ zugewiesen werden.
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/First-visit_MC.png}
