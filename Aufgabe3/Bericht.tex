@@ -137,23 +137,20 @@ Bei der Partitionierung wird ein großer Zustandsraum in mehrere kleine Räume a
 Ein Beispiel für die Abstraktion ist Kniffel, in dem bspw. die Reihenfolge in der die Würfel geworfen wurden ignoriert wird und sie immer der Größe nach sortiert werden, um den Zustandsraum zu verkleinern. In diesem Fall werden dadurch nicht einmal Informationen verloren.
 
 \subsection{Neuronale Netze}
-\todo{Nachfolgendes stammt aus dem Ertel}
-Die Tabelle der Q der V Werte kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
+Die Tabelle der Q- oder V-Werte kann durch ein neuronales Netz ersetzt werden, welches als Input die Variablen $a$ und $s$ erhält und als Ziel-Output den Q-Wert besitzt. Für jede Aktualisierung des Q-Werts gibt es ein Trainingsbeispiel mit genannten Inputs und Outputs. Durch das neuronale Netz kann die Funktion $Q(s,a)$, welche für unendlich viele Eingaben definiert ist, auf einen endlichen Raum reduziert werden.
 Statt eines neuronalen Netzes ist es auch möglich, andere überwachte Lernverfahren, wie beispielsweise Support Vector Machines zu verwenden, um den unendlichen Zustandsraum zu generalisieren und somit zu begrenzen.
 
 
-
 \section{Fragestellung 4: Kniffel}
-Dynamische Programmierung scheidet auf Grund des fehlenden Modells und der großen Zustandsmenge aus.
+Das Spiel Kniffel besitzt auf Grund der umfangreichen Spielregeln und Möglichkeiten, Werte auf dem Spielblock einzutragen, einen sehr großen Zustandsraum. Je nach Kombination und Reihenfolge der in den Spielbock eingetragenen Werte ist das Gesamtresultat des Spiels unterschiedlich. 
 
-Q-Learning würde erst am Ende bewerten, bei Kniffel ist es aber wichtig die Zwischenschritte zu kennen?
+Für einen Kniffel-Agenten wird also ein Lernverfahren benötigt, welches die Spielsituation nach jedem Zug und nicht erst am Ende des Spiels betrachtet und bewertet.
+Aus diesem Grund fallen die Algorithmen des Temporal Difference Learning (Q-Learning und SARSA) bereits heraus, da diese nur den direkt betroffenen Zustand und seine Aktion bewerten. Im Gegensatz dazu ist ein Monte Carlo-Algorithmus geeigneter, da diese Verfahren am Ende einer Episode jeden Schritt derselben betrachten und bewerten.
 
-Monte Carlo speichert bereits bewertete Paare und erlaubt daher die Bewertung jeden Schrittes. Ist aber speicheraufwendig.
-Auf Grund der Problembeschaffenheit müssen alle Verfahren zusätzlichen Aufwand betreiben, um den Zustandsraum klein zu bekommen.
+Auf Grund des großen Zustandsraumes eignen sich auch die Verfahren der dynamischen Programmierung nicht als Algorithmus für einen Agenten. Policy- und Value-Iteration berechnen die Erwartungswerte über den kompletten Zustandsraum. Dieser ist in dieser Problemstellung zu groß als dass er durchgerechnet werden kann.
 
-\todo{siehe den Link}
-\url{http://www.haw-hamburg.de/fileadmin/user_upload/SchulCampus/Downloads/Arbeitskreis_Informatik/Kniffel_Agenten.pdf}
-\listoftodos
+Generell lässt sich für diese Problemstellung aber sagen, dass die Speicherung des kompletten Zustandsraumes schwierig ist. Beim Monte Carlo Verfahren müssen für alle auftretenden Zustands-Aktions-Paare Listen von Rewards für alle Episoden gespeichert werden, sodass diese in das weitere Lernen für die Durchschnittsbildung und die Verfeinerung der Erwartungswerte einfließen können. 
 
+Auf Grund der Problembeschaffenheit müssten alle Verfahren zusätzlichen Aufwand betreiben, um den Zustandsraum klein zu bekommen.
 \end{document}
 
