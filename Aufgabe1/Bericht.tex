@@ -657,7 +657,7 @@ Die behaviour policy $\pi'$ ist eine willkürliche soft policy. Die estimation p
 
 
 	\subsection{Arbeitsweise Umgangssprachlich}
-	Der Gedank bei Temporal Difference Learning alle Erwartungswerte für rewards beliebig zu füllen und dann beim durchlaufen eine Pfades die auf diesem liegenden Werte anhand ihrer der Abweichung $real - erwartet$ anzugleichen.
+	Der Gedanke bei Temporal Difference Learning ist, alle Erwartungswerte für rewards beliebig zu füllen, um dann beim 	Durchlaufen eine Pfades, die auf diesem liegenden Werte anhand ihrer Abweichung $real - erwartet$ anzugleichen.
 
 \subsection{On-Policy TD Control: Sarsa}
 
@@ -709,7 +709,7 @@ Der Agent soll vom Start zum Ziel gelangen und dabei der Klippe nicht zu nahe ko
 \todo{check: Auf der cliff Abbildung \ref{fig:Cliff} sieht der optimale weg aus wie ca. -14 in Abbildung \ref{fig:Cliff_Result} kommt keiner näher als ca. -25 ?}
 
 
-Abbildung \ref{fig:Cliff_Result} ist zu entnehmen wie sich mit $\epsilon = 0.1$ der durchschnittliche Reward für Sarsa bzw. Q Learning entwickelt. Es ist festzustellen das bei konstantem $\epsilon$ die von Q Learning ausgeführte exploriation dazu führt, dass der durchschnittle Reward schlechter als bei Sarsa ist. Dies da zwar der potentiell optimalere Weg direkt am Kliff entlang gelernt wird, aber in der exploriation dann regelmäßig über das cliff hinausgegangen wird. Würde man $\epsilon$ kontinuierlich verringern würden beide Lösungen sich asympthotisch der optimalen anpassen \cite[Vgl.][S. 186,187]{sutton:2005}. \todo{check: wieso passen sie sich an ? OS}
+Abbildung \ref{fig:Cliff_Result} ist zu entnehmen wie sich mit $\epsilon = 0.1$ der durchschnittliche Reward für Sarsa bzw. Q Learning entwickelt. Es ist festzustellen das bei konstantem $\epsilon$ die von Q Learning ausgeführte exploriation dazu führt, dass der durchschnittliche Reward schlechter als bei Sarsa ist. Das kommt daher, dass zwar der potentiell optimalere Weg direkt am Kliff entlang gelernt wird, aber in der exploriation dann regelmäßig über das cliff hinausgegangen wird. Würde man $\epsilon$ kontinuierlich verringern, würden sich beide Lösungen sich asympthotisch der optimalen anpassen \cite[Vgl.][S. 186,187]{sutton:2005}. \todo{check: wieso passen sie sich an ? OS}
 
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/Cliff_Ergebnisse.png}
@@ -736,7 +736,7 @@ Markelic Kap 3.4.1).
 Der Trace Decay Faktor $\lambda$ gibt an, wie stark die Werte im ET pro Schritt reduziert werden sollen.
 
 \subsubsection{Ablauf}
-Das Vorgehen ist dabei wie folgt: Für jeden besuchten Zustand wird im ET der Wert für den Zustand um 1 erhöht (Zeile 8 im Sarsa($\lambda$) Pseudo-Code). Nach jedem Schritt wird der Fehler $\delta$ auf den Zustand aufaddiert (Zeile 10) und der komplette ET wird um den Trace Decay Faktor sowie den Diskountfaktor reduziert (Zeile 11).
+Das Vorgehen ist dabei wie folgt: Für jeden besuchten Zustand wird im ET der Wert für den Zustand um 1 erhöht (Zeile 8 im Sarsa($\lambda$) Pseudo-Code, Abb. \ref{fig:SarsaLambda}). Nach jedem Schritt wird der Fehler $\delta$ auf den Zustand aufaddiert (Zeile 10) und der komplette ET wird um den Trace Decay Faktor sowie den Diskountfaktor reduziert (Zeile 11).
 Dadurch, dass Zeile 11 für jeden Schritt ausgeführt wird, werden die späteren Zustände im Trace weniger oft reduziert und fallen somit stärker ins Gewicht. 
 
 Bild \ref{fig:Trace} zeigt, wie der Wert eines Zustandes mit jedem Besuch steigt und gleich wieder nach jedem Schritt reduziert wird.
@@ -754,7 +754,7 @@ Bild \ref{fig:Trace1} zeigt, wie später besuchte Zustände schwächer reduziert
 
 \subsection{Sarsa($\lambda$) Algorithmus}
 Sarsa($\lambda$) ist ein On-Policy TD-Learning Algorithmus, der das Konzept der Eligibility Traces (ETs) verwendet.
-Für jeden Schritt von einem Zustand in den nächsten wird ein $\delta$ berrechnet und im ET gemerkt welcher Zustand besucht wurde. Anschließend wird das $\delta$ abgeschwächt auf den Zustand verrechnet und der ET reduziert.
+Für jeden Schritt von einem Zustand in den nächsten wird ein $\delta$ berrechnet und im ET gemerkt, welcher Zustand besucht wurde. Anschließend wird das $\delta$ abgeschwächt auf den Zustand verrechnet und der ET reduziert.
 \begin{figure}[htbp]
 	\centering	\includegraphics[width=0.8\textwidth]{Bilder/SarsaLambda.jpg}
 	\caption{Der Sarsa($\lambda$) Pseudocode}
